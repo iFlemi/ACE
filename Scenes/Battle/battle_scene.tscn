@@ -41,11 +41,10 @@ layout_mode = 2
 [node name="Background" type="TextureRect" parent="."]
 show_behind_parent = true
 z_as_relative = false
-custom_minimum_size = Vector2(1280, 720)
-layout_mode = 2
-offset_top = 2.0
-offset_right = 1280.0
-offset_bottom = 722.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_o6sr6")
@@ -55,7 +54,7 @@ expand_mode = 1
 script = ExtResource("4_y5wpr")
 
 [node name="Player1" type="Sprite2D" parent="BattlerController"]
-position = Vector2(886, 321.199)
+position = Vector2(1306, 556.565)
 texture = ExtResource("5_ya4t8")
 script = ExtResource("6_q2wgr")
 Agility = 15.0
@@ -64,7 +63,7 @@ BattleIcon = ExtResource("5_ya4t8")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Enemy1" type="Sprite2D" parent="BattlerController"]
-position = Vector2(301, 323.911)
+position = Vector2(508, 602.695)
 texture = ExtResource("6_dll07")
 script = ExtResource("8_hdlw3")
 Agility = 12.0
@@ -72,7 +71,7 @@ BattleIcon = ExtResource("6_dll07")
 BattleIconBorder = ExtResource("10_nw1lg")
 
 [node name="Player2" type="Sprite2D" parent="BattlerController"]
-position = Vector2(884, 503.416)
+position = Vector2(1347, 755.123)
 texture = ExtResource("11_pdjuk")
 script = ExtResource("6_q2wgr")
 Agility = 5.0
@@ -81,7 +80,7 @@ BattleIcon = ExtResource("11_pdjuk")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Enemy2" type="Sprite2D" parent="BattlerController"]
-position = Vector2(303, 491.382)
+position = Vector2(421, 768.16)
 texture = ExtResource("12_dtbwr")
 script = ExtResource("8_hdlw3")
 Agility = 8.0
@@ -89,7 +88,7 @@ BattleIcon = ExtResource("12_dtbwr")
 BattleIconBorder = ExtResource("10_nw1lg")
 
 [node name="Player3" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1070, 509.432)
+position = Vector2(1557, 744.092)
 texture = ExtResource("13_pq7s6")
 script = ExtResource("6_q2wgr")
 Agility = 15.0
@@ -98,7 +97,7 @@ BattleIcon = ExtResource("13_pq7s6")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Player4" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1075, 319.9)
+position = Vector2(1521, 563.585)
 texture = ExtResource("14_6p1tk")
 script = ExtResource("6_q2wgr")
 Intelligence = 5.0
