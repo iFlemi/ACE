@@ -25,19 +25,6 @@ grow_vertical = 2
 scale = Vector2(1, 0.997188)
 script = ExtResource("1_pevlf")
 
-[node name="BattleSceneUIMargin" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="TurnBar" parent="BattleSceneUIMargin" instance=ExtResource("1_3pefr")]
-layout_mode = 2
-
 [node name="Background" type="TextureRect" parent="."]
 show_behind_parent = true
 z_as_relative = false
@@ -49,6 +36,12 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_o6sr6")
 expand_mode = 1
+
+[node name="TurnBar" parent="." instance=ExtResource("1_3pefr")]
+layout_mode = 2
+anchors_preset = 0
+offset_top = 32.0
+offset_bottom = 128.0
 
 [node name="BattlerController" type="Node2D" parent="."]
 script = ExtResource("4_y5wpr")

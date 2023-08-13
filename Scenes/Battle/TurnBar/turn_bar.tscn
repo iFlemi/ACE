@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfj32i8kmlwk7"]
+[gd_scene load_steps=4 format=3 uid="uid://bfj32i8kmlwk7"]
 
 [ext_resource type="Script" path="res://Scenes/Battle/TurnBar/TurnBar.cs" id="1_e8i1h"]
-[ext_resource type="Texture2D" uid="uid://2t1sul1x0usp" path="res://Scenes/Battle/TurnBar/turn_bar_bg.png" id="2_tyycn"]
+[ext_resource type="Texture2D" uid="uid://daucco4ola4dp" path="res://Scenes/Battle/TurnBar/TurnBarBackground.png" id="2_18t4v"]
+[ext_resource type="Texture2D" uid="uid://cy4eawnm6aphp" path="res://Scenes/Battle/TurnBar/Divider4.png" id="3_eohrh"]
 
 [node name="TurnBar" type="Control"]
-custom_minimum_size = Vector2(0, 96)
+top_level = true
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 32.0
-offset_bottom = 128.0
+offset_top = 48.0
+offset_bottom = 144.0
 grow_horizontal = 2
 size_flags_vertical = 0
 script = ExtResource("1_e8i1h")
@@ -21,13 +22,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_tyycn")
-expand_mode = 2
+texture = ExtResource("2_18t4v")
 
-[node name="ColorRect" type="ColorRect" parent="TurnBarBackground"]
-layout_mode = 0
-offset_left = 640.0
-offset_top = 1.0
-offset_right = 645.0
-offset_bottom = 86.0
-color = Color(1, 0, 0, 1)
+[node name="TurnBarCentreMarker" type="TextureRect" parent="."]
+z_as_relative = false
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_eohrh")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_as_relative = false
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
