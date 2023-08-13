@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Ace.Models;
 using static Constants;
 
 public partial class TurnBar : Control
@@ -58,7 +59,7 @@ public partial class TurnBar : Control
     
     public Battler HandlePlayerInput(Battler battler)
     {
-        GD.Print($"HandlePlayerInput has been reached for {battler?.id.ToString() ?? "null"}");
+        GD.Print($"HandlePlayerInput has been reached for {battler?.Id.ToString() ?? "null"}");
         return battler;
     }
     
@@ -66,7 +67,7 @@ public partial class TurnBar : Control
     {
         var turnBarIcon = _battlerIconResource.Instantiate() as TurnBarIcon;
         turnBarIcon.Texture = battler.BattleIconBorder;
-        turnBarIcon._battlerId = battler.id;
+        turnBarIcon._battlerId = battler.Id;
         turnBarIcon = turnBarIcon.SetPositionRange(_turnBarBackground.Size);
         turnBarIcon.SetPosition(new Vector2(turnBarIcon.Position.X, battler.InParty 
             ? Size.Y/ BattlerIconPositionRatio 

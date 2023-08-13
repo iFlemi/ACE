@@ -2,6 +2,8 @@ using Ace;
 using Godot;
 using System;
 
+namespace Ace.Models;
+
 public partial class PartyMember : Battler
 {
     public override bool InParty => true;

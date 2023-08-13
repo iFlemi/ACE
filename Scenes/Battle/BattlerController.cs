@@ -2,6 +2,7 @@ using Ace;
 using Godot;
 using LanguageExt;
 using System;
+using Ace.Models;
 
 public partial class BattlerController : Node2D
 {
