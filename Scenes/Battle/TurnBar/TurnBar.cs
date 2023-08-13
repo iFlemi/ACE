@@ -13,6 +13,9 @@ public partial class TurnBar : Control
     PackedScene _battlerIconResource;
     Seq<Battler> _battlers;
 
+    [Export]
+    public int BattlerIconPositionRatio = 4;
+
     public override void _Ready()
     {
 
@@ -65,6 +68,9 @@ public partial class TurnBar : Control
         turnBarIcon.Texture = battler.BattleIconBorder;
         turnBarIcon._battlerId = battler.id;
         turnBarIcon = turnBarIcon.SetPositionRange(_turnBarBackground.Size);
+        turnBarIcon.SetPosition(new Vector2(turnBarIcon.Position.X, battler.InParty 
+            ? Size.Y/ BattlerIconPositionRatio 
+            : (BattlerIconPositionRatio -1) * Size.Y/BattlerIconPositionRatio));
         turnBarIcon = turnBarIcon.SetBattlerIcon(battler.BattleIcon);
         //GD.Print($"battlerIcon: {GD.VarToStr(battlerIcon)}");
         battler.TurnBarIcon = turnBarIcon;

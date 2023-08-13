@@ -17,7 +17,7 @@ public partial class TurnBarIcon : TextureRect
         _battlerIcon = Utils.GetFirstChildOfType<TextureRect>(this);
     }
 
-    public TurnBarIcon Snap(float ratio)
+    public TurnBarIcon Snap(float ratio, bool isEnemy = false)
     {
         var newPositionX = Mathf.Lerp(_positionRange.X, _positionRange.Y, ratio);
         SetPosition(new Vector2(newPositionX, Position.Y));
