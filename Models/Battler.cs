@@ -9,7 +9,14 @@ using static Constants;
 
 namespace Ace.Models;
 
-public abstract partial class Battler : Sprite2D
+
+public interface IBattler
+{
+    (int RemainingShield, int RemainingStamina, int RemainingHealth) AllocateDamage(int damage, int shield, int stamina, int health);
+
+}
+
+public abstract partial class Battler : Sprite2D, IBattler
 {
     public Guid Id { get; } = Guid.NewGuid();
     [Export]

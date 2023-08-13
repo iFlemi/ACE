@@ -1,0 +1,184 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Ian\\Documents\\ACE\\AceTests\\AceTests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Ian\\Documents\\ACE\\Ace.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ian\\Documents\\ACE\\Ace.csproj",
+        "projectName": "Ace",
+        "projectPath": "C:\\Users\\Ian\\Documents\\ACE\\Ace.csproj",
+        "packagesPath": "C:\\Users\\Ian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ian\\Documents\\ACE\\.godot\\mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Ian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Godot.SourceGenerators": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "GodotSharp": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "GodotSharpEditor": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "LanguageExt.Core": {
+              "target": "Package",
+              "version": "[4.4.3, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ian\\Documents\\ACE\\AceTests\\AceTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ian\\Documents\\ACE\\AceTests\\AceTests.csproj",
+        "projectName": "AceTests",
+        "projectPath": "C:\\Users\\Ian\\Documents\\ACE\\AceTests\\AceTests.csproj",
+        "packagesPath": "C:\\Users\\Ian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ian\\Documents\\ACE\\AceTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Ian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Ian\\Documents\\ACE\\Ace.csproj": {
+                "projectPath": "C:\\Users\\Ian\\Documents\\ACE\\Ace.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.5.0, )"
+            },
+            "NSubstitute": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "NUnit.Analyzers": {
+              "target": "Package",
+              "version": "[3.6.1, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
