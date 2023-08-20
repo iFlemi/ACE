@@ -9,9 +9,10 @@ namespace Ace.Models.Stats;
 
 public abstract record StatFactor
 {
-    public Type SourceStat { get; init; }
-    public Type TargetStat { get; init; }
-    public float Value { get; init; }
+  public Type SourceStat { get; init; }
+  public Type TargetStat { get; init; }
+  public float Value { get; init; }
+  public EnhancementLayer Layer { get; init; }
 }
 
 public record AdditiveFactor : StatFactor

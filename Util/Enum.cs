@@ -9,3 +9,11 @@ public enum APState
     ReadyToActivate
 }
 
+public enum EnhancementLayer
+{
+  Material,
+  Expertise,
+  Enchantment,
+  Divine,
+  Enigmatic
+}

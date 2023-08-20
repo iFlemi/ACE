@@ -13,21 +13,24 @@ public abstract record Stat
   [Export]
   public float Value;
 
-  public float GetFactor(IEnumerable<StatFactor> factors) =>
-    factors
+  public float GetFactor(IEnumerable<StatFactor> factors) => factors
       .Filter(f => f.TargetStat == GetType())
-      .Fold(
-        (a: 1.0f, m: 1.0f),
-        (acc, next) => next switch
-          {
-            AdditiveFactor af => (acc.a + af.Value, acc.m),
-            MultiplicativeFactor mf => (acc.a, acc.m + mf.Value),
-            _ => acc
-          })
-      .Apply(acc => acc.a * acc.m);
+      .GroupBy(f => f.Layer)
+      .Fold(1.0f, (acc, next) => acc * GetFactorForLayer(next));
 
-  public float GetCurrent(IEnumerable<StatFactor> factors) => 
+  public float GetCurrent(IEnumerable<StatFactor> factors) =>
     Value * GetFactor(factors);
+
+  public float GetFactorForLayer(IEnumerable<StatFactor> factors) =>
+    factors.Fold(
+      (a: 1.0f, m: 1.0f),
+      (acc, next) => next switch
+      {
+        AdditiveFactor af => (acc.a + af.Value, acc.m),
+        MultiplicativeFactor mf => (acc.a, acc.m + mf.Value),
+        _ => acc
+      })
+    .Apply(acc => acc.a * acc.m);
 }
 
 public record Strength : Stat

@@ -111,7 +111,7 @@ private void EmitSignalsWhereRequired()
 }
 
 protected virtual float CalculateNewAP(float delta) =>
-    (float)(CurrentAP + (StatCalculator.GetSpeed(Agility, Intelligence, StatAbilities) * delta) / 100);
+    (float)(CurrentAP + (StatCalculator.GetSpeed(Agility.Value, Intelligence.Value, StatAbilities) * delta) / 100);
 
 private (APState newState, float newAP) GetNewAPAndAPState(float delta)
 {

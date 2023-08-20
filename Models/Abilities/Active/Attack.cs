@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ace.Models.Abilities.Active;
 
-public class Attack : ActiveAbility
+public record Attack : ActiveAbility
 {
     public override Battler Action(Battler user, params Battler[] targets)
     {

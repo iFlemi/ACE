@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ace.Models.Abilities.Passive;
 
-public class Preparation : PassiveAbility
+public record Preparation : PassiveAbility
 {
 
 }
