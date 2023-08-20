@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ace.Interfaces.Tests;
+namespace AceTests.Interfaces;
 
 
 [TestFixture]

@@ -1,4 +1,6 @@
-﻿using Godot;
+﻿using Ace.Interfaces;
+using Ace.Models.Abilities;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,7 @@ using static Constants;
 
 namespace Ace.Models;
 
-
-public interface IBattler
-{
-    (int RemainingShield, int RemainingStamina, int RemainingHealth) AllocateDamage(int damage, int shield, int stamina, int health);
-
-}
-
-public abstract partial class Battler : Sprite2D, IBattler
+public abstract partial class Battler : Sprite2D
 {
     public Guid Id { get; } = Guid.NewGuid();
     [Export]
@@ -60,7 +55,14 @@ public abstract partial class Battler : Sprite2D, IBattler
     public TurnBarIcon TurnBarIcon { get; set; }
 
     public abstract bool InParty { get; }
-    public virtual float GetSpeed() => Agility;
+
+    public TriggeredAbility[] PassiveAbilities { get; set; }
+    public ActiveAbility[] ActiveAbilities { get; set; }
+    public PassiveAbility[] StatAbilities { get; set; }
+
+    public virtual IDamageAllocator DamageAllocator { get; set; } = new StandardDamageAllocator();
+
+    public virtual IStatCalculator StatCalculator { get; set; }
 
     public virtual float GetHealthFactor()
     {
@@ -119,7 +121,7 @@ public abstract partial class Battler : Sprite2D, IBattler
     }
 
     protected virtual float CalculateNewAP(float delta) => 
-        (float)(CurrentAP + (GetSpeed() * delta) / 100);
+        (float)(CurrentAP + (StatCalculator.GetSpeed(Agility, Intelligence, StatAbilities) * delta) / 100);
 
     private (APState newState, float newAP) GetNewAPAndAPState(float delta)
     {
@@ -141,7 +143,7 @@ public abstract partial class Battler : Sprite2D, IBattler
 
     public Battler TakeDamage(int damageAmount, Battler damageSource)
     {
-        var (shield, stamina, health) = AllocateDamage(damageAmount, CurrentShield, CurrentStamina, CurrentHealth);
+        var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, CurrentShield, CurrentStamina, CurrentHealth);
 
         CurrentShield = shield;
         CurrentStamina = stamina;
@@ -155,14 +157,7 @@ public abstract partial class Battler : Sprite2D, IBattler
         return this;
     }
 
-    public (int RemainingShield, int RemainingStamina, int RemainingHealth) AllocateDamage(int damage, int shield, int stamina, int health) => 
-        damage switch
-        {
-            var d when d >= shield => (0, d - shield >= stamina ? 0 : stamina - (d - shield), d - shield >= stamina ? 0 : health),
-            var d when d >= shield + stamina => (0, 0, d - shield - stamina >= health ? 0 : health - (d - shield - stamina)),
-            var d when d >= shield + stamina + health => (0, 0, 0),
-            _ => (shield - damage, stamina, health)
-        };
+
 
     public override int GetHashCode() => Id.GetHashCode();
 
