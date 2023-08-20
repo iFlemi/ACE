@@ -1,4 +1,5 @@
-﻿using LanguageExt;
+﻿using Godot;
+using LanguageExt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Ace.Models.Stats;
 
 public abstract record Stat
 {
+  [Export]
   public float Value;
 
   public float GetFactor(IEnumerable<StatFactor> factors) =>
@@ -26,4 +28,23 @@ public abstract record Stat
 
   public float GetCurrent(IEnumerable<StatFactor> factors) => 
     Value * GetFactor(factors);
+}
+
+public record Strength : Stat
+{
+}
+public record Agility : Stat
+{
+}
+public record Intelligence : Stat
+{
+}
+public record Power : Stat
+{
+}
+public record Willpower : Stat
+{
+}
+public record Endurance : Stat
+{
 }
