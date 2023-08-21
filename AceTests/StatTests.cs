@@ -1,5 +1,6 @@
 ﻿using Ace.Models.Stats;
 using FluentAssertions;
+using LanguageExt;
 
 namespace AceTests.Stats;
 
@@ -7,9 +8,9 @@ namespace AceTests.Stats;
 public class StatTests
 {
   [TestCaseSource(typeof(StatFactorTestCases), nameof(StatFactorTestCases.GetCurrentStatTestCases))]
-  public void GivenStatFactors_WhenGetFactor_ThenAddAndMultiply(StatFactor[] statFactors, float expectedResult)
+  public void GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply(StatModifier[] statFactors, float expectedResult)
   {
-    var totalFactor = new Strength().GetFactor(statFactors);
+    var totalFactor = new Strength { Value = 1f }.GetModified(statFactors.ToSeq());
     totalFactor.Should().Be(expectedResult);
   }
 }
@@ -19,45 +20,60 @@ public static class StatFactorTestCases
   public static IEnumerable<TestCaseData> GetCurrentStatTestCases()
   {
     yield return new TestCaseData(new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f },
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f }
-    }, 3f);
-    yield return new TestCaseData(
-      new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f }
-    }, 4f);
-    yield return new TestCaseData(
-      new StatFactor[] {
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f }
-    }, 3f);
-    yield return new TestCaseData(
-      new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f },
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f }
-    }, 4f);
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 0f },
+    }, 1f);
     yield return new TestCaseData(new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Material },
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Expertise }
-    }, 4f);
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f }
+    }, 3f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Additive in layer");
     yield return new TestCaseData(new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Material },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Expertise }
-    }, 4f);
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new AdditiveFactor { TargetStat = typeof(Willpower), Factor = 1f }
+    }, 2f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Ignore wrong target stat");
     yield return new TestCaseData(new StatFactor[] {
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Material },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = 1f, Layer = EnhancementLayer.Expertise }
-    }, 4f);
-    yield return new TestCaseData(
-    new StatFactor[] {
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f, Layer = EnhancementLayer.Material },
-      new AdditiveFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f, Layer = EnhancementLayer.Expertise },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f, Layer = EnhancementLayer.Material },
-      new MultiplicativeFactor { SourceStat = typeof(Strength), TargetStat = typeof(Strength), Value = .5f, Layer = EnhancementLayer.Expertise }
-  }, 5.0625f);
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f }
+    }, 4f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Additive and multiplicative in layer");
+    yield return new TestCaseData(new StatFactor[] {
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f }
+    }, 3f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Multiplicative in layer"); ;
+    yield return new TestCaseData(new StatFactor[] {
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f }
+    }, 9f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Multiple add/multiply in layer"); ;
+    yield return new TestCaseData(new StatFactor[] {
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise }
+    }, 4f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Add between layers");
+    yield return new TestCaseData(new StatFactor[] {
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise }
+    }, 4f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Add and multiply between layers");
+    yield return new TestCaseData(new StatFactor[] {
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise }
+    }, 4f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Multiply between layers");
+    yield return new TestCaseData(new StatFactor[] {
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise }
+    }, 16f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Add and multiply within and between layers");
+    yield return new TestCaseData(new StatFactor[] {
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Enchantment },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Divine },
+      new AdditiveFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Enigmatic },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Material },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Expertise },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Enchantment },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Divine },
+      new MultiplicativeFactor { TargetStat = typeof(Strength), Factor = 1f, Layer = EnhancementLayer.Enigmatic },
+    }, 1024f).SetName($"{nameof(StatTests.GivenStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Add and multiply between all layers - for fun");
   }
 }
 

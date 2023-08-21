@@ -1,24 +1,28 @@
-﻿using LanguageExt.TypeClasses;
+﻿using LanguageExt;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ace.Models.Stats;
 
-public abstract record StatFactor
+public abstract record StatModifier
 {
-  public Type SourceStat { get; init; }
   public Type TargetStat { get; init; }
-  public float Value { get; init; }
   public EnhancementLayer Layer { get; init; }
+
 }
 
-public record AdditiveFactor : StatFactor
+public abstract record StatFactor : StatModifier
 {
+  public float Factor { get; init; }
 }
 
-public record MultiplicativeFactor : StatFactor
+public abstract record StatValue : StatModifier
 {
+  public float Value { get; init; }
 }
+
+public record AdditiveFactor : StatFactor { }
+
+public record MultiplicativeFactor : StatFactor { }
+
+public record AdditiveValue : StatValue { }
+public record MultiplicativeValue : StatValue { }
