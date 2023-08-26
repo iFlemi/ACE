@@ -27,12 +27,13 @@ public static class StatHelpers
 
   public static AllStats RecalculateAllStats(this AllStats currentStats, Seq<StatModifier> modifiers)
   {
-    var newPrimary = currentStats.PrimaryStats.RecalculatePrimaryStats(modifiers);
+    var newPrimary = currentStats.PrimaryStats.RecalculatePrimaryStats(modifiers
+      .Filter(m => m is not SecondaryStatFactor));
     var newSecondary = currentStats.SecondaryStats
       .DeriveAllSecondaryStats(modifiers
         .Filter(m => m is SecondaryStatFactor)
-        .Cast<SecondaryStatFactor>(), newPrimary)
-      .RecalculateSecondaryStats(modifiers);
+        .Cast<SecondaryStatFactor>(), newPrimary);
+
     return new AllStats { PrimaryStats = newPrimary, SecondaryStats = newSecondary };
   }
 

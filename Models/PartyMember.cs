@@ -14,7 +14,7 @@ public partial class PartyMember : Battler
 
   public PartyMember() : base()
   {
-    //PassiveAbilities = PassiveAbilities.Add(new Preparation(Constants.FACTOR_3, Constants.INTENSIFIER_4));
+    PassiveAbilities = PassiveAbilities.Add(new Preparation(Constants.FACTOR_3, Constants.INTENSIFIER_4));
     RecalculateAllStats();
   }
 

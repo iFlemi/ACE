@@ -24,6 +24,6 @@ public record SourceStatLayer(EnhancementLayer Layer, StatType SourceStat) : ICo
       ? SourceStat.CompareTo(other.SourceStat)
       : Layer.CompareTo(other.Layer);
 
-  public override int GetHashCode() =>  
+  public override int GetHashCode() =>
     ((int)Layer + (int)SourceStat).GetHashCode();
 }

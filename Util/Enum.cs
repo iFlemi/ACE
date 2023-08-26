@@ -14,7 +14,8 @@ public enum EnhancementLayer
   Expertise,
   Enchantment,
   Divine,
-  Enigmatic
+  Enigmatic,
+  Absolute
 }
 
 public enum StatType

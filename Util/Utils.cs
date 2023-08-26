@@ -28,9 +28,21 @@ public static class Utils
   public static string FormatPercentage(this float value) =>
       string.Format("{0:P0}", value);
 
-  public static Seq<T> Log<T>(this Seq<T> seq, string message = "")
+  public static T Log<T>(this T obj, string message = "") 
   {
-    GD.Print($"{message}{JsonConvert.SerializeObject(seq)}");
-    return seq;
+    GD.Print(message, obj);
+    return obj;
+  }
+
+  public static T Log<T>(this T obj, Func<T, string> f)
+  {
+    GD.Print(f(obj));
+    return obj;
+  }
+
+  public static T LogAsJson<T>(this T obj)
+  {
+    GD.Print(JsonConvert.SerializeObject(obj));
+    return obj;
   }
 }

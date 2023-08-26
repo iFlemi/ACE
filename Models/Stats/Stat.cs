@@ -1,8 +1,6 @@
-﻿using Godot;
-using LanguageExt;
+﻿using LanguageExt;
 using System;
-using System.Data;
-
+ 
 namespace Ace.Models.Stats;
 
 public abstract record Stat

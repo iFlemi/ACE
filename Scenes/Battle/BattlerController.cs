@@ -1,5 +1,6 @@
 using Godot;
 using LanguageExt;
+using static LanguageExt.Prelude;
 using Ace.Models;
 
 public partial class BattlerController : Node2D
@@ -15,5 +16,7 @@ public partial class BattlerController : Node2D
 	{
 	}
 
-    public Seq<Battler> GetBattlers() => _battlers;
+	public Seq<Battler> GetBattlers() => 
+		Seq1(_battlers.Head());
+		//_battlers;
 }

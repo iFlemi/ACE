@@ -88,12 +88,9 @@ public abstract partial class Battler : Sprite2D
     }
   }
 
-  protected virtual float CalculateNewAP(float delta) 
-  {
-    GD.Print($"{Id} AP: {CurrentAPState} Speed: {Stats.SecondaryStats.Speed} Delta: {delta}");
-    return (float)(CurrentAP + (Stats.SecondaryStats.Speed.GetCurrent() * delta) / 100);
-  }
-
+  protected virtual float CalculateNewAP(float delta) =>  
+     (float)(CurrentAP + Stats.SecondaryStats.Speed.GetCurrent() * delta / 100);
+  
   private (APState newState, float newAP) GetNewAPAndAPState(float delta)
   {
     var oldAP = CurrentAP;
@@ -114,9 +111,9 @@ public abstract partial class Battler : Sprite2D
 
   public Battler TakeDamage(int damageAmount, Battler damageSource)
   {
-    var currentShield = Stats.SecondaryStats.Shield.GetCurrent();
-    var currentStamina = Stats.SecondaryStats.Stamina.GetCurrent();
-    var currentHealth = Stats.SecondaryStats.Health.GetCurrent();
+    var currentShield = Mathf.RoundToInt(Stats.SecondaryStats.Shield.GetCurrent());
+    var currentStamina = Mathf.RoundToInt(Stats.SecondaryStats.Stamina.GetCurrent());
+    var currentHealth = Mathf.RoundToInt(Stats.SecondaryStats.Health.GetCurrent());
 
     var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, currentShield, currentStamina, currentHealth);
 
