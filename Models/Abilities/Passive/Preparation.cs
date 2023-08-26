@@ -1,25 +1,16 @@
 ﻿using Ace.Models.Stats;
 using LanguageExt;
-using System.Security.Cryptography.X509Certificates;
+using static LanguageExt.Prelude;
 
 namespace Ace.Models.Abilities.Passive;
 
-public record Preparation : PassiveAbility
+public record Preparation(float IntToAgiFactor, float AgiPenalty, string Name = "Preparation") : PassiveAbility (Name)
 {
-  private float IntToAgiFactor;
-  private float AgiPenalty;
-  
-  public Preparation(float intToAgiFactor = 0.5f, float agiPenalty = 0.25f)
-  {
-    IntToAgiFactor = intToAgiFactor;
-    AgiPenalty = agiPenalty;
-    AffectedStats = Seq.create(typeof(Speed), typeof(Agility));
-  }
+  public override string Description { get => 
+      $"{IntToAgiFactor.FormatPercentage()} of {StatType.Intelligence} added to {StatType.Speed}. " +
+      $"{AgiPenalty.FormatPercentage()} of {StatType.Agility} no longer added to {StatType.Speed}."; }
 
-  public override Seq<StatModifier> GetStatModifiers() =>
-  Seq.create<StatModifier>(
-    new AdditiveFactor { TargetStat = typeof(Speed), Layer = EnhancementLayer.Expertise, Factor = IntToAgiFactor },
-    new AdditiveFactor { TargetStat = typeof(Speed), Layer = EnhancementLayer.Material, Factor = -AgiPenalty }
-  );
-
+  public override Seq<StatModifier> GetStatModifiers() => Seq<StatModifier>(
+    new SecondaryStatFactor (TargetStat: StatType.Speed, EnhancementLayer.Expertise, IntToAgiFactor, SourceStat: StatType.Intelligence),
+    new SecondaryStatFactor (TargetStat: StatType.Speed, EnhancementLayer.Expertise, -AgiPenalty, SourceStat: StatType.Agility));
 }

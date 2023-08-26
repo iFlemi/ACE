@@ -50,8 +50,6 @@ script = ExtResource("4_y5wpr")
 position = Vector2(1306, 556.565)
 texture = ExtResource("5_ya4t8")
 script = ExtResource("6_q2wgr")
-Agility = 15.0
-Intelligence = 5.0
 BattleIcon = ExtResource("5_ya4t8")
 BattleIconBorder = ExtResource("7_fwmuc")
 
@@ -59,7 +57,6 @@ BattleIconBorder = ExtResource("7_fwmuc")
 position = Vector2(508, 602.695)
 texture = ExtResource("6_dll07")
 script = ExtResource("8_hdlw3")
-Agility = 12.0
 BattleIcon = ExtResource("6_dll07")
 BattleIconBorder = ExtResource("10_nw1lg")
 
@@ -67,8 +64,6 @@ BattleIconBorder = ExtResource("10_nw1lg")
 position = Vector2(1347, 755.123)
 texture = ExtResource("11_pdjuk")
 script = ExtResource("6_q2wgr")
-Agility = 5.0
-Intelligence = 15.0
 BattleIcon = ExtResource("11_pdjuk")
 BattleIconBorder = ExtResource("7_fwmuc")
 
@@ -76,7 +71,6 @@ BattleIconBorder = ExtResource("7_fwmuc")
 position = Vector2(421, 768.16)
 texture = ExtResource("12_dtbwr")
 script = ExtResource("8_hdlw3")
-Agility = 8.0
 BattleIcon = ExtResource("12_dtbwr")
 BattleIconBorder = ExtResource("10_nw1lg")
 
@@ -84,8 +78,6 @@ BattleIconBorder = ExtResource("10_nw1lg")
 position = Vector2(1557, 744.092)
 texture = ExtResource("13_pq7s6")
 script = ExtResource("6_q2wgr")
-Agility = 15.0
-Intelligence = 12.0
 BattleIcon = ExtResource("13_pq7s6")
 BattleIconBorder = ExtResource("7_fwmuc")
 
@@ -93,6 +85,5 @@ BattleIconBorder = ExtResource("7_fwmuc")
 position = Vector2(1521, 563.585)
 texture = ExtResource("14_6p1tk")
 script = ExtResource("6_q2wgr")
-Intelligence = 5.0
 BattleIcon = ExtResource("14_6p1tk")
 BattleIconBorder = ExtResource("7_fwmuc")

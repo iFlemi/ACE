@@ -4,6 +4,7 @@ using Ace.Models.Abilities.Passive;
 using Ace.Models.Stats;
 using Godot;
 using LanguageExt;
+using static LanguageExt.Prelude;
 using System;
 using static Constants;
 
@@ -13,36 +14,12 @@ public abstract partial class Battler : Sprite2D
 {
   public Guid Id { get; } = Guid.NewGuid();
 
-  public Strength Strength { get; set; }
-  public Agility Agility { get; set; }
-  public Intelligence Intelligence { get; set; }
-  public Power Power { get; set; }
-  public Willpower Willpower { get; set; }
-  public Endurance Endurance { get; set; }
-
-  public Speed Speed { get; set; }
+  public AllStats Stats = new();
 
   [Export]
   public Texture2D BattleIcon { get; set; }
   [Export]
   public Texture2D BattleIconBorder { get; set; }
-
-  [Export]
-  public float EnduranceHealthFactor = 0.5f;
-  [Export]
-  public float EnduranceStaminaFactor = 0.5f;
-  [Export]
-  public float WillpowerStaminaFactor = 0.5f;
-  [Export]
-  public float WillpowerShieldFactor = 0.0f;
-
-  public virtual int MaxHealth => (int)(Endurance.Value * EnduranceHealthFactor);
-  public virtual int MaxStamina => (int)(Endurance.Value * EnduranceStaminaFactor + Willpower.Value * WillpowerStaminaFactor);
-  public virtual int MaxShield => (int)(Willpower.Value * WillpowerShieldFactor);
-
-  public int CurrentHealth { get; set; }
-  public int CurrentStamina { get; set; }
-  public int CurrentShield { get; set; }
 
   public float CurrentAP { get; set; } = 0;
   public APState CurrentAPState { get; set; }
@@ -53,15 +30,17 @@ public abstract partial class Battler : Sprite2D
 
   public Seq<TriggeredAbility> TriggeredAbilities { get; set; }
   public Seq<ActiveAbility> ActiveAbilities { get; set; }
-  public Seq<PassiveAbility> PassiveAbilities { get; set; } = Seq.create<PassiveAbility>(new BasicStats());
+  public Seq<PassiveAbility> PassiveAbilities { get; set; } = Seq1<PassiveAbility>(new BasicStats());
 
   public virtual IDamageAllocator DamageAllocator { get; set; } = new StandardDamageAllocator();
 
-  public virtual ISpeedCalculator SpeedCalculator { get; set; }
+  public Battler()
+  {
+  }
 
   public virtual float GetHealthFactor()
   {
-    float healthPercentage = (float)CurrentHealth / MaxHealth;
+    float healthPercentage = (float)Stats.SecondaryStats.Health.GetCurrent() / Stats.SecondaryStats.Health.BaseValue;
 
     float factorAt0 = 0.1f;
     float factorAt50 = 0.67f;
@@ -82,7 +61,7 @@ public abstract partial class Battler : Sprite2D
   [Signal]
   public delegate void ReadyToActEventHandler(Battler battler);
   [Signal]
-  public delegate void RecalculateStatsEventHandler(Battler battler);
+  public delegate void NeedToRecalculateStatsEventHandler(Battler battler);
 
   public Battler UpdateAP(double delta)
   {
@@ -109,8 +88,11 @@ public abstract partial class Battler : Sprite2D
     }
   }
 
-  protected virtual float CalculateNewAP(float delta) =>
-      (float)(CurrentAP + (SpeedCalculator.GetSpeed(this) * delta) / 100);
+  protected virtual float CalculateNewAP(float delta) 
+  {
+    GD.Print($"{Id} AP: {CurrentAPState} Speed: {Stats.SecondaryStats.Speed} Delta: {delta}");
+    return (float)(CurrentAP + (Stats.SecondaryStats.Speed.GetCurrent() * delta) / 100);
+  }
 
   private (APState newState, float newAP) GetNewAPAndAPState(float delta)
   {
@@ -132,19 +114,43 @@ public abstract partial class Battler : Sprite2D
 
   public Battler TakeDamage(int damageAmount, Battler damageSource)
   {
-    var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, CurrentShield, CurrentStamina, CurrentHealth);
+    var currentShield = Stats.SecondaryStats.Shield.GetCurrent();
+    var currentStamina = Stats.SecondaryStats.Stamina.GetCurrent();
+    var currentHealth = Stats.SecondaryStats.Health.GetCurrent();
 
-    CurrentShield = shield;
-    CurrentStamina = stamina;
-    CurrentHealth = health;
+    var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, currentShield, currentStamina, currentHealth);
 
-    var signalName = CurrentHealth > 0
+    Stats.SecondaryStats.Shield.SetCurrent(shield);
+    Stats.SecondaryStats.Stamina.SetCurrent(stamina);
+    Stats.SecondaryStats.Health.SetCurrent(health);
+
+    var signalName = Stats.SecondaryStats.Health.GetCurrent() > 0
         ? SignalName.DamageTaken
         : SignalName.CharacterDied;
     EmitSignal(signalName, this, damageSource);
 
     return this;
   }
+
+  protected AllStats RecalculateAllStats() =>
+    Stats = Stats.RecalculateAllStats(PassiveAbilityStatModifiers);
+
+  protected PrimaryStats RecalculatePrimaryStats() =>
+    Stats.PrimaryStats = Stats.PrimaryStats.RecalculatePrimaryStats(PassiveAbilityStatModifiers);
+  protected SecondaryStats RecalculateSecondaryStats() =>
+    Stats.SecondaryStats = Stats.SecondaryStats.RecalculateSecondaryStats(PassiveAbilityStatModifiers);
+
+  protected SecondaryStats ReDeriveSecondaryStats() =>
+    Stats.SecondaryStats = Stats.SecondaryStats
+      .DeriveAllSecondaryStats(SecondaryStatFactors, Stats.PrimaryStats);
+
+  protected Seq<StatModifier> PassiveAbilityStatModifiers =>
+    PassiveAbilities.Bind(pa => pa.GetStatModifiers());
+
+  protected Seq<SecondaryStatFactor> SecondaryStatFactors =>
+    PassiveAbilityStatModifiers
+    .Filter(x => x is SecondaryStatFactor)
+    .Cast<SecondaryStatFactor>();
 
   public override int GetHashCode() => Id.GetHashCode();
 
