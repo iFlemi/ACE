@@ -12,5 +12,5 @@ public record Preparation(float IntToAgiFactor, float AgiPenalty, string Name = 
 
   public override Seq<StatModifier> GetStatModifiers() => Seq<StatModifier>(
     new SecondaryStatFactor (TargetStat: StatType.Speed, EnhancementLayer.Expertise, IntToAgiFactor, SourceStat: StatType.Intelligence),
-    new SecondaryStatFactor (TargetStat: StatType.Speed, EnhancementLayer.Material, -AgiPenalty, SourceStat: StatType.Agility));
+    new SecondaryStatFactor (TargetStat: StatType.Speed, EnhancementLayer.Expertise, -AgiPenalty, SourceStat: StatType.Agility));
 }

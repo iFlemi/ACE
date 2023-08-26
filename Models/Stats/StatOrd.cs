@@ -7,19 +7,19 @@ namespace Ace.Models.Stats;
 public struct StatOrd : Ord<Stat>
 {
   public int Compare(Stat x, Stat y) =>
-    x.id.CompareTo(y.id);
+    x.Id.CompareTo(y.Id);
 
   public Task<int> CompareAsync(Stat x, Stat y) =>
     Task.FromResult(Compare(x, y));
 
   public bool Equals(Stat x, Stat y) =>
-    x.id == y.id;
+    x.Id == y.Id;
 
   public Task<bool> EqualsAsync(Stat x, Stat y) =>
     Task.FromResult(Equals(x, y));
  
   public int GetHashCode(Stat x) =>
-    x.id.GetHashCode();
+    x.Id.GetHashCode();
 
   public Task<int> GetHashCodeAsync(Stat x) => 
     Task.FromResult(GetHashCode(x));

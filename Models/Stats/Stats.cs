@@ -14,9 +14,6 @@ public record AllStats : IEnumerable<Stat>
   public IEnumerator<Stat> GetEnumerator() =>
     (PrimaryStats as IEnumerable<Stat>).ConcatFast(SecondaryStats).GetEnumerator();
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-  public override string ToString() =>
-    JsonConvert.SerializeObject(this);
 }
 
 public record PrimaryStats : IEnumerable<PrimaryStat>
@@ -37,7 +34,6 @@ public record PrimaryStats : IEnumerable<PrimaryStat>
     yield return Willpower;
     yield return Endurance;
   }
-
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
   
 }

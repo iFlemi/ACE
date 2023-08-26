@@ -5,7 +5,7 @@ namespace Ace.Models.Stats;
 
 public abstract record Stat
 {
-  public Guid id { get; set; } = Guid.NewGuid();
+  public Guid Id { get; } = Guid.NewGuid();
   public float BaseValue { get; set; }
   protected float Current;
   public float GetCurrent() => BaseValue + Current;
@@ -18,16 +18,14 @@ public abstract record Stat
   }
   public float SetCurrent(float value) => Current = value;
 
-  public override int GetHashCode() => id.GetHashCode();
+  public override int GetHashCode() => Id.GetHashCode();
 }
 
-public abstract record PrimaryStat : Stat
-{
-}
+public abstract record PrimaryStat : Stat {}
 
-public record Strength : PrimaryStat { public override StatType StatType =>  StatType.Strength; }
-public record Agility : PrimaryStat{ public override StatType StatType => StatType.Agility; }
-public record Intelligence : PrimaryStat{ public override StatType StatType => StatType.Intelligence; }
-public record Power : PrimaryStat{ public override StatType StatType => StatType.Power; }
-public record Willpower : PrimaryStat{ public override StatType StatType => StatType.Willpower; }
-public record Endurance : PrimaryStat{ public override StatType StatType => StatType.Endurance; }
+public record Strength : PrimaryStat { public override StatType StatType => StatType.Strength; }
+public record Agility : PrimaryStat { public override StatType StatType => StatType.Agility; }
+public record Intelligence : PrimaryStat { public override StatType StatType => StatType.Intelligence; }
+public record Power : PrimaryStat { public override StatType StatType => StatType.Power; }
+public record Willpower : PrimaryStat { public override StatType StatType => StatType.Willpower; }
+public record Endurance : PrimaryStat { public override StatType StatType => StatType.Endurance; }
