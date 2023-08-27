@@ -1,8 +1,7 @@
-﻿using Ace.Models.Stats;
+﻿using System;
+using Ace.Models.Stats;
 using Godot;
 using LanguageExt;
-using static LanguageExt.Prelude;
-using System;
 
 namespace Ace.Models.Abilities;
 
@@ -26,7 +25,7 @@ public abstract record ActiveAbility (string Name) : BattleAbility(Name)
 
 public abstract record TriggeredAbility (string Name) : BattleAbility(Name)
 {
-  public abstract StringName TriggeringSingal { get; set; }
+  public abstract StringName TriggeringSignal { get; set; }
 }
 
 public abstract record PassiveAbility (string Name) : Ability(Name)

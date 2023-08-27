@@ -1,22 +1,27 @@
-﻿public static class Constants
+﻿namespace Ace.Util;
+
+public static class Constants
 {
-  public const float AP_BAR_ACTION_POINT = 0.50f;
-  public const double INPUT_WAIT_TIMESCALE = 0.25;
-  public const float DEFAULT_STAT_VALUE = 12f;
+  public const float ApBarActionPoint = 0.50f;
+  public const double InputWaitTimescale = 0.25;
+  public const float DefaultStatValue = 12f;
 
 
-  public const float INTENSIFIER_1 = 0.06f;
-  public const float INTENSIFIER_2 = 0.12f;
-  public const float INTENSIFIER_3 = 0.18f;
-  public const float INTENSIFIER_4 = 0.24f;
-  public const float INTENSIFIER_5 = 0.30f;
-  public const float INTENSIFIER_6 = 0.36f;
+  public const float Intensifier1 = 0.06f;
+  public const float Intensifier2 = 0.12f;
+  public const float Intensifier3 = 0.18f;
+  public const float Intensifier4 = 0.24f;
+  public const float Intensifier5 = 0.30f;
+  public const float Intensifier6 = 0.36f;
 
-  public const float FACTOR_1 = 0.18f;
-  public const float FACTOR_2 = 0.36f;
-  public const float FACTOR_3 = 0.54f;
-  public const float FACTOR_4 = 0.72f;
-  public const float FACTOR_5 = 0.90f;
-  public const float FACTOR_6 = 1.08f;
+  public const float Factor1 = 0.18f;
+  public const float Factor2 = 0.36f;
+  public const float Factor3 = 0.54f;
+  public const float Factor4 = 0.72f;
+  public const float Factor5 = 0.90f;
+  public const float Factor6 = 1.08f;
+
+  public const string BattlerIconPath = "res://Scenes/Battle/TurnBar/BattlerIcon.tscn";
+  public const string ActionListPath = "res://Scenes/UserInterface/UIBattlerActionSelectionMenu/action_list.tscn";
+  public const string ActionButtonPath = "res://Scenes/UserInterface/UIBattlerActionSelectionMenu/action_button.tscn";
 }
-

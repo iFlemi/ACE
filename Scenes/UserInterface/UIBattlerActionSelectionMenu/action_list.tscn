@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq6r2bq63vjv8"]
+
+[ext_resource type="PackedScene" uid="uid://dqf0o3p6toh5s" path="res://UserInterface/UIBattlerActionSelectionMenu/menu_select_arrow.tscn" id="1_57q1m"]
+
+[node name="action_list" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuSelectArrow" parent="." instance=ExtResource("1_57q1m")]

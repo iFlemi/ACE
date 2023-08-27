@@ -1,8 +1,6 @@
-﻿using LanguageExt;
-using Newtonsoft.Json;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using static LanguageExt.Prelude;
+using LanguageExt;
 
 namespace Ace.Models.Stats;
 
@@ -46,6 +44,9 @@ public record SecondaryStats : IEnumerable<SecondaryStat>
   public Health Health = new();
   public Shield Shield = new();
   public Stamina Stamina = new();
+  public DamageMulti DamageMulti = new();
+  public SpellDamageMulti SpellDamageMulti = new();
+  public DamageResistance DamageResistance = new();
 
   public IEnumerator<SecondaryStat> GetEnumerator()
   {
@@ -55,6 +56,9 @@ public record SecondaryStats : IEnumerable<SecondaryStat>
     yield return Health;
     yield return Shield;
     yield return Stamina;
+    yield return SpellDamageMulti;
+    yield return DamageMulti;
+    yield return DamageResistance;
   }
   IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

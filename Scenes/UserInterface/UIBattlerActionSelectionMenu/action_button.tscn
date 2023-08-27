@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsn8r26j55kgx"]
+
+[ext_resource type="Texture2D" uid="uid://dc6dvc4o4y5bv" path="res://UserInterface/UIBattlerActionSelectionMenu/Button4.png" id="1_jyrqc"]
+[ext_resource type="Texture2D" uid="uid://bgu4smmkrn45r" path="res://UserInterface/UIBattlerActionSelectionMenu/Button4-blue.png" id="2_dgwmx"]
+
+[node name="ActionButton" type="TextureButton"]
+offset_right = 689.0
+offset_bottom = 153.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("1_jyrqc")
+texture_pressed = ExtResource("2_dgwmx")
+texture_hover = ExtResource("2_dgwmx")
+texture_focused = ExtResource("2_dgwmx")
+stretch_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 140.0
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+tooltip_text = "Description"
+mouse_filter = 0
+theme_override_font_sizes/font_size = 48
+text = "Action"
+horizontal_alignment = 1
+vertical_alignment = 1

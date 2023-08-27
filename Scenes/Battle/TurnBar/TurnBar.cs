@@ -1,7 +1,9 @@
+using Ace.Models;
+using Ace.Util;
 using Godot;
 using LanguageExt;
-using Ace.Models;
-using static Constants;
+
+namespace Ace.Scenes.Battle.TurnBar;
 
 public partial class TurnBar : Control
 {
@@ -16,13 +18,12 @@ public partial class TurnBar : Control
     {
 
         _turnBarBackground = Utils.GetFirstChildOfType<TextureRect>(this);
-        const string battlerIconPath = "res://Scenes/Battle/TurnBar/BattlerIcon.tscn";
-        _battlerIconResource = ResourceLoader.Load<PackedScene>(battlerIconPath);
+        _battlerIconResource = ResourceLoader.Load<PackedScene>(BattlerIconPath);
     }
 
     public override void _Process(double delta)
     {
-        UpdateAPForBattlers(delta);
+        UpdateApForBattlers(delta);
     }
 
     public TurnBar Setup(Seq<Battler> battlers)
@@ -36,18 +37,18 @@ public partial class TurnBar : Control
         return this;
     }
 
-    private Unit UpdateAPForBattlers(double delta)
+    private Unit UpdateApForBattlers(double delta)
     {
-        _battlers = _battlers.Map(battler => battler.UpdateAP(delta));
+        _battlers = _battlers.Map(battler => battler.UpdateAp(delta));
         _battlers.ToList()
             .ForEach(battler => battler.TurnBarIcon
-                .Snap(battler.CurrentAP));
+                .Snap(battler.CurrentAp));
 
-        bool areAnyPlayersWaiting = _battlers.Any(b => 
+        var areAnyPlayersWaiting = _battlers.Any(b => 
             b is PartyMember p
-            && p.CurrentAPState == APState.WaitingForInput);
+            && p.CurrentApState == ApState.WaitingForInput);
 
-        if (areAnyPlayersWaiting) Engine.TimeScale = INPUT_WAIT_TIMESCALE;
+        if (areAnyPlayersWaiting) Engine.TimeScale = InputWaitTimescale;
 
         return new Unit();
     }
@@ -62,7 +63,7 @@ public partial class TurnBar : Control
     {
         var turnBarIcon = _battlerIconResource.Instantiate() as TurnBarIcon;
         turnBarIcon.Texture = battler.BattleIconBorder;
-        turnBarIcon._battlerId = battler.Id;
+        turnBarIcon.BattlerId = battler.Id;
         turnBarIcon = turnBarIcon.SetPositionRange(_turnBarBackground.Size);
         turnBarIcon.SetPosition(new Vector2(turnBarIcon.Position.X, battler.InParty 
             ? Size.Y/ BattlerIconPositionRatio 

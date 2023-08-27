@@ -1,4 +1,6 @@
-﻿public enum APState
+﻿namespace Ace.Util;
+
+public enum ApState
 {
     Unknown,
     Waiting,
@@ -10,27 +12,30 @@
 
 public enum EnhancementLayer
 {
-  Material,
-  Expertise,
-  Enchantment,
-  Divine,
-  Enigmatic,
-  Absolute
+    Material,
+    Expertise,
+    Enchantment,
+    Divine,
+    Enigmatic,
+    Absolute
 }
 
 public enum StatType
 {
-  Unknown = -1,
-  Strength,
-  Agility,
-  Intelligence,
-  Power,
-  Willpower,
-  Endurance,
-  Speed,
-  Critical,
-  Evasion,
-  Health,
-  Shield,
-  Stamina
+    Unknown = -1,
+    Strength,
+    Agility,
+    Intelligence,
+    Power,
+    Willpower,
+    Endurance,
+    Speed,
+    Critical,
+    Evasion,
+    Health,
+    Shield,
+    Stamina,
+    DamageMulti,
+    SpellDamageMulti,
+    DamageResistance,
 }

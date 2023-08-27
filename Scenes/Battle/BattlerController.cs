@@ -1,22 +1,24 @@
+using Ace.Models;
+using Ace.Util;
 using Godot;
 using LanguageExt;
-using static LanguageExt.Prelude;
-using Ace.Models;
+
+namespace Ace.Scenes.Battle;
 
 public partial class BattlerController : Node2D
 {
-	Seq<Battler> _battlers;
+	public Seq<Battler> Battlers { get; private set; }
+	public ulong Id { get; private set; }
 
 	public override void _Ready()
 	{
-		_battlers = Utils.GetAllChildrenOfType<Battler>(this).ToSeq();
+		Id = GetInstanceId();
+		Battlers = Utils.GetAllChildrenOfType<Battler>(this).ToSeq();
 	}
 
 	public override void _Process(double delta)
 	{
 	}
 
-	public Seq<Battler> GetBattlers() => 
-		Seq1(_battlers.Head());
-		//_battlers;
+	public Seq<Battler> GetBattlers() => Battlers;
 }

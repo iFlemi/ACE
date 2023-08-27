@@ -1,23 +1,25 @@
-﻿using Godot;
-using System;
+﻿using Ace.Util;
+using Godot;
+
+namespace Ace.Scenes.Battle.TurnBar;
 
 public partial class TurnBarIcon : TextureRect
 {
-    public Vector2 _positionRange = Vector2.Zero;
+    public Vector2 PositionRange = Vector2.Zero;
     
-    public TextureRect _battlerIcon;
-    public Guid _battlerId;
+    public TextureRect BattlerIcon;
+    public ulong BattlerId;
 
-    private float halfX => Size.X / 2.0f;
+    private float HalfX => Size.X / 2.0f;
 
     public override void _Ready()
     {
-        _battlerIcon = Utils.GetFirstChildOfType<TextureRect>(this);
+        BattlerIcon = Utils.GetFirstChildOfType<TextureRect>(this);
     }
 
     public TurnBarIcon Snap(float ratio, bool isEnemy = false)
     {
-        var newPositionX = Mathf.Lerp(_positionRange.X, _positionRange.Y, ratio);
+        var newPositionX = Mathf.Lerp(PositionRange.X, PositionRange.Y, ratio);
         SetPosition(new Vector2(newPositionX, Position.Y));
         return this;
     }
@@ -25,15 +27,14 @@ public partial class TurnBarIcon : TextureRect
     public TurnBarIcon SetBattlerIcon(Texture2D battlerIconTexture)
     {
         //GD.Print($"SetBattlerIcon: {GD.VarToStr(_battlerIcon)}");
-        _battlerIcon ??= Utils.GetFirstChildOfType<TextureRect>(this);
-        _battlerIcon.Texture = battlerIconTexture;
+        BattlerIcon ??= Utils.GetFirstChildOfType<TextureRect>(this);
+        BattlerIcon.Texture = battlerIconTexture;
         return this;
     }
 
     public TurnBarIcon SetPositionRange(Vector2 parentSize)
     {
-        _positionRange = new Vector2(-halfX, -halfX + parentSize.X);
+        PositionRange = new Vector2(-HalfX, -HalfX + parentSize.X);
         return this;
     }
 }
-

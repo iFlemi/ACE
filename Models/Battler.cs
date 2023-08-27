@@ -2,17 +2,16 @@
 using Ace.Models.Abilities;
 using Ace.Models.Abilities.Passive;
 using Ace.Models.Stats;
+using Ace.Util;
 using Godot;
 using LanguageExt;
 using static LanguageExt.Prelude;
-using System;
-using static Constants;
 
 namespace Ace.Models;
 
 public abstract partial class Battler : Sprite2D
 {
-  public Guid Id { get; } = Guid.NewGuid();
+  public ulong Id { get; private set; }
 
   public AllStats Stats = new();
 
@@ -21,10 +20,10 @@ public abstract partial class Battler : Sprite2D
   [Export]
   public Texture2D BattleIconBorder { get; set; }
 
-  public float CurrentAP { get; set; } = 0;
-  public APState CurrentAPState { get; set; }
+  public float CurrentAp { get; set; }
+  public ApState CurrentApState { get; set; }
 
-  public TurnBarIcon TurnBarIcon { get; set; }
+  public Scenes.Battle.TurnBar.TurnBarIcon TurnBarIcon { get; set; }
 
   public abstract bool InParty { get; }
 
@@ -34,19 +33,20 @@ public abstract partial class Battler : Sprite2D
 
   public virtual IDamageAllocator DamageAllocator { get; set; } = new StandardDamageAllocator();
 
-  public Battler()
+  public override void _Ready()
   {
+    Id = GetInstanceId();
   }
 
   public virtual float GetHealthFactor()
   {
-    float healthPercentage = (float)Stats.SecondaryStats.Health.GetCurrent() / Stats.SecondaryStats.Health.BaseValue;
+    var healthPercentage = Stats.SecondaryStats.Health.GetCurrent() / Stats.SecondaryStats.Health.BaseValue;
 
-    float factorAt0 = 0.1f;
-    float factorAt50 = 0.67f;
-    float factorAt100 = 1.0f;
+    const float factorAt0 = 0.1f;
+    const float factorAt50 = 0.67f;
+    const float factorAt100 = 1.0f;
 
-    float factor = Mathf.Lerp(factorAt0, factorAt100, healthPercentage * 2);
+    var factor = Mathf.Lerp(factorAt0, factorAt100, healthPercentage * 2);
     factor = Mathf.Lerp(factor, factorAt50, Mathf.Abs(healthPercentage - 0.5f) * 4);
 
     return Mathf.Clamp(factor, factorAt0, 1.0f);
@@ -63,49 +63,47 @@ public abstract partial class Battler : Sprite2D
   [Signal]
   public delegate void NeedToRecalculateStatsEventHandler(Battler battler);
 
-  public Battler UpdateAP(double delta)
+  public Battler UpdateAp(double delta)
   {
-    (CurrentAPState, CurrentAP) = GetNewAPAndAPState((float)delta);
-    EmitAPRelatedSignals();
+    (CurrentApState, CurrentAp) = GetNewApAndApState((float)delta);
+    EmitApRelatedSignals();
     return this;
   }
 
-  private void EmitAPRelatedSignals()
+  private void EmitApRelatedSignals()
   {
-    switch (CurrentAPState)
+    switch (CurrentApState)
     {
-      case APState.ReadyForInput:
+      case ApState.ReadyForInput:
         EmitSignal(SignalName.ReadyForInput, this);
         break;
-      case APState.ReadyToActivate:
+      case ApState.ReadyToActivate:
         EmitSignal(SignalName.ReadyToAct, this);
         break;
-      case APState.Unknown:
-        GD.PrintErr($"Battler {Id} - hit {nameof(APState)}: {APState.Unknown}\r\nnewAP: {CurrentAP}");
-        break;
-      default:
+      case ApState.Unknown:
+        GD.PrintErr($"Battler {Id} - hit {nameof(ApState)}: {ApState.Unknown}\r\nnewAP: {CurrentAp}");
         break;
     }
   }
 
-  protected virtual float CalculateNewAP(float delta) =>  
-     (float)(CurrentAP + Stats.SecondaryStats.Speed.GetCurrent() * delta / 100);
+  protected virtual float CalculateNewAp(float delta) =>  
+     CurrentAp + Stats.SecondaryStats.Speed.GetCurrent() * delta / 100;
   
-  private (APState newState, float newAP) GetNewAPAndAPState(float delta)
+  private (ApState newState, float newAP) GetNewApAndApState(float delta)
   {
-    var oldAP = CurrentAP;
-    var adjustedAP = CalculateNewAP(delta);
+    var oldAp = CurrentAp;
+    var adjustedAp = CalculateNewAp(delta);
 
-    return adjustedAP switch
+    return adjustedAp switch
     {
-      var ap when ap <= 0 => (APState.Waiting, 0),
-      var ap when ap < AP_BAR_ACTION_POINT => (APState.Waiting, ap),
-      var ap when ap >= AP_BAR_ACTION_POINT && oldAP < AP_BAR_ACTION_POINT => (APState.ReadyForInput, AP_BAR_ACTION_POINT),
-      var ap when ap >= AP_BAR_ACTION_POINT && (CurrentAPState == APState.ReadyForInput || CurrentAPState == APState.WaitingForInput) => (APState.WaitingForInput, AP_BAR_ACTION_POINT),
-      var ap when ap >= AP_BAR_ACTION_POINT && oldAP < 1.00f => (APState.Activating, ap),
-      var ap when ap >= 1.00f && oldAP < 1.00f => (APState.ReadyToActivate, 1.00f),
-      var ap when ap >= 1.00f => (APState.ReadyToActivate, 1.00f),
-      _ => (APState.Unknown, CurrentAP)
+      <= 0 => (ApState.Waiting, 0),
+      var ap and < ApBarActionPoint => (ApState.Waiting, ap),
+      >= ApBarActionPoint when oldAp < ApBarActionPoint => (ApState.ReadyForInput, ApBarActionPoint),
+      >= ApBarActionPoint when CurrentApState is ApState.ReadyForInput or ApState.WaitingForInput => (ApState.WaitingForInput, ApBarActionPoint),
+      var ap and >= ApBarActionPoint when oldAp < 1.00f => (ApState.Activating, ap),
+      >= 1.00f when oldAp < 1.00f => (ApState.ReadyToActivate, 1.00f),
+      >= 1.00f => (ApState.ReadyToActivate, 1.00f),
+      _ => (ApState.Unknown, CurrentAp)
     };
   }
 
@@ -115,7 +113,7 @@ public abstract partial class Battler : Sprite2D
     var currentStamina = Mathf.RoundToInt(Stats.SecondaryStats.Stamina.GetCurrent());
     var currentHealth = Mathf.RoundToInt(Stats.SecondaryStats.Health.GetCurrent());
 
-    var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, currentShield, currentStamina, currentHealth);
+    var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, currentShield, currentStamina, currentHealth, Stats.SecondaryStats.DamageResistance.GetCurrent());
 
     Stats.SecondaryStats.Shield.SetCurrent(shield);
     Stats.SecondaryStats.Stamina.SetCurrent(stamina);

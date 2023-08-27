@@ -1,8 +1,4 @@
-﻿using Ace.Models.Stats;
-using FluentAssertions;
-using LanguageExt;
-
-namespace AceTests.Stats;
+﻿ namespace AceTests.Stats;
 
 [TestFixture]
 public class StatTests

@@ -1,6 +1,7 @@
-﻿using LanguageExt;
-using System;
- 
+﻿using System;
+using Ace.Util;
+using LanguageExt;
+
 namespace Ace.Models.Stats;
 
 public abstract record Stat

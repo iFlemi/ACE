@@ -87,3 +87,5 @@ texture = ExtResource("14_6p1tk")
 script = ExtResource("6_q2wgr")
 BattleIcon = ExtResource("14_6p1tk")
 BattleIconBorder = ExtResource("7_fwmuc")
+
+[node name="Menus" type="CanvasLayer" parent="."]

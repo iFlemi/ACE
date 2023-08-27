@@ -1,5 +1,4 @@
-﻿using Godot;
-using LanguageExt;
+﻿using LanguageExt;
 
 namespace Ace.Models.Stats;
 public static class StatHelpers
@@ -70,6 +69,9 @@ public static class StatHelpers
       Health = stats.Health.Rederive(modifiers, primaryStats),
       Stamina = stats.Stamina.Rederive(modifiers, primaryStats),
       Shield = stats.Shield.Rederive(modifiers, primaryStats),
+      DamageMulti = stats.DamageMulti.Rederive(modifiers, primaryStats),
+      SpellDamageMulti = stats.SpellDamageMulti.Rederive(modifiers, primaryStats),
+      DamageResistance = stats.DamageResistance.Rederive(modifiers, primaryStats)
     };
   
   public static T Rederive<T>(this T stat, Seq<SecondaryStatFactor> modifiers, PrimaryStats primaryStats) where T : SecondaryStat =>

@@ -1,13 +1,8 @@
-﻿using Godot;
+﻿using System.Linq;
+using Ace.Util;
+using Godot;
 using LanguageExt;
 using static LanguageExt.Prelude;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using NUnit.Framework.Internal;
-using Newtonsoft.Json;
 
 namespace Ace.Models.Stats;
 
@@ -57,6 +52,11 @@ public abstract record SecondaryStat : Stat
 public record Speed : SecondaryStat { public override StatType StatType => StatType.Speed; }
 public record Critical : SecondaryStat { public override StatType StatType => StatType.Critical; }
 public record Evasion : SecondaryStat { public override StatType StatType => StatType.Evasion; }
+public record DamageMulti : SecondaryStat { public override StatType StatType => StatType.DamageMulti; }
+public record SpellDamageMulti : SecondaryStat { public override StatType StatType => StatType.SpellDamageMulti; }
+public record DamageResistance : SecondaryStat { public override StatType StatType => StatType.DamageResistance; }
+
+
 public record Health : SecondaryStat { public override StatType StatType => StatType.Health; }
 public record Shield : SecondaryStat { public override StatType StatType => StatType.Shield; }
 public record Stamina : SecondaryStat { public override StatType StatType => StatType.Stamina; }

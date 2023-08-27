@@ -1,10 +1,5 @@
-using Ace.Models.Abilities;
 using Ace.Models.Abilities.Passive;
-using Godot;
-using LanguageExt;
-using LanguageExt.Pipes;
-using System;
-using static LanguageExt.Prelude;
+using Ace.Util;
 
 namespace Ace.Models;
 
@@ -12,9 +7,9 @@ public partial class PartyMember : Battler
 {
   public override bool InParty => true;
 
-  public PartyMember() : base()
+  public PartyMember()
   {
-    PassiveAbilities = PassiveAbilities.Add(new Preparation(Constants.FACTOR_3, Constants.INTENSIFIER_4));
+    PassiveAbilities = PassiveAbilities.Add(new Preparation(Constants.Factor3, Constants.Intensifier4));
     RecalculateAllStats();
   }
 
