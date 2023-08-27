@@ -1,6 +1,4 @@
-﻿using LanguageExt;
-
-namespace Ace.Models.Stats;
+﻿namespace Ace.Models.Stats;
 public static class StatHelpers
 {
   public static float GetModified(Stat stat, Seq<StatModifier> modifiers) =>

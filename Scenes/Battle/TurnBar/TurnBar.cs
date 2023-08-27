@@ -1,7 +1,6 @@
 using Ace.Models;
 using Ace.Util;
 using Godot;
-using LanguageExt;
 
 namespace Ace.Scenes.Battle.TurnBar;
 

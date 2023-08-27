@@ -4,8 +4,6 @@ using Ace.Models.Abilities.Passive;
 using Ace.Models.Stats;
 using Ace.Util;
 using Godot;
-using LanguageExt;
-using static LanguageExt.Prelude;
 
 namespace Ace.Models;
 

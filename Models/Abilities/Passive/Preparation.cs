@@ -1,7 +1,5 @@
 ﻿using Ace.Models.Stats;
 using Ace.Util;
-using LanguageExt;
-using static LanguageExt.Prelude;
 
 namespace Ace.Models.Abilities.Passive;
 

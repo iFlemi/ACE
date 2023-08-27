@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Ace.Util;
 using Godot;
-using LanguageExt;
-using static LanguageExt.Prelude;
 
 namespace Ace.Models.Stats;
 
