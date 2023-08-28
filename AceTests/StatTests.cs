@@ -1,4 +1,6 @@
-﻿ namespace AceTests.Stats;
+﻿ using Ace.Util;
+
+ namespace AceTests.Stats;
 
 [TestFixture]
 public class StatTests

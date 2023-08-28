@@ -15,7 +15,6 @@ public abstract record SecondaryStat : Stat
       GroupFactorsByStatAndLayer,
       grouped => MergeFactorsWithCurrentStats(grouped, stats),
       SumMergedFactorsByStat,
-      withStats => withStats.Fold(0f, (c, n) => c + n),
       total => Mathf.Max(total, 0f)
       )
     };
@@ -41,10 +40,10 @@ public abstract record SecondaryStat : Stat
         _ => (StatType.Unknown, grouping.Item2)
       }).ToSeq();
 
-  private static Map<StatType, float> SumMergedFactorsByStat(Seq<(StatType, float)> statValues) =>
+  private static float SumMergedFactorsByStat(Seq<(StatType, float)> statValues) =>
     statValues.GroupBy(x => x.Item1)
-      .Map(grouping => (grouping.Key, grouping.Map(item => item.Item2).Sum()))
-      .ToMap();
+      .Map(grouping => grouping.Map(item => item.Item2).Sum())
+      .Sum();
 }
 
 public record Speed : SecondaryStat { public override StatType StatType => StatType.Speed; }

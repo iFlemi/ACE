@@ -38,9 +38,9 @@ public partial class TurnBar : Control
 
     private Unit UpdateApForBattlers(double delta)
     {
-        _battlers = _battlers.Map(battler => battler.UpdateAp(delta));
-        _battlers.ToList()
-            .ForEach(battler => battler.TurnBarIcon
+        _battlers = _battlers.Map(battler => 
+                battler.UpdateAp(delta))
+            .Do(battler => battler.TurnBarIcon
                 .Snap(battler.CurrentAp));
 
         var areAnyPlayersWaiting = _battlers.Any(b => 
