@@ -30,7 +30,6 @@ public static class StatHelpers
       .DeriveAllSecondaryStats(modifiers
         .Filter(m => m is SecondaryStatFactor)
         .Cast<SecondaryStatFactor>(), newPrimary);
-
     return new AllStats { PrimaryStats = newPrimary, SecondaryStats = newSecondary };
   }
 
@@ -51,10 +50,11 @@ public static class StatHelpers
       Speed = stats.Speed.Recalculate(modifiers),
       Critical = stats.Critical.Recalculate(modifiers),
       Evasion = stats.Evasion.Recalculate(modifiers),
-      Health = stats.Health.Recalculate(modifiers),
-      Stamina = stats.Stamina.Recalculate(modifiers),
-      Shield = stats.Shield.Recalculate(modifiers)
+      DamageMulti = stats.DamageMulti.Recalculate(modifiers),
+      SpellDamageMulti = stats.SpellDamageMulti.Recalculate(modifiers),
+      DamageResistance = stats.DamageResistance.Recalculate(modifiers)
     };
+  
   public static T Recalculate<T>(this T stat, Seq<StatModifier> statModifiers) where T: Stat =>
     (T)stat.UpdateAndFetchCurrent(statModifiers);
 
@@ -64,9 +64,6 @@ public static class StatHelpers
       Speed = stats.Speed.Rederive(modifiers, primaryStats),
       Critical = stats.Critical.Rederive(modifiers, primaryStats),
       Evasion = stats.Evasion.Rederive(modifiers, primaryStats),
-      Health = stats.Health.Rederive(modifiers, primaryStats),
-      Stamina = stats.Stamina.Rederive(modifiers, primaryStats),
-      Shield = stats.Shield.Rederive(modifiers, primaryStats),
       DamageMulti = stats.DamageMulti.Rederive(modifiers, primaryStats),
       SpellDamageMulti = stats.SpellDamageMulti.Rederive(modifiers, primaryStats),
       DamageResistance = stats.DamageResistance.Rederive(modifiers, primaryStats)
@@ -74,4 +71,11 @@ public static class StatHelpers
   
   public static T Rederive<T>(this T stat, Seq<SecondaryStatFactor> modifiers, PrimaryStats primaryStats) where T : SecondaryStat =>
     (T)stat.DeriveFromPrimaryStats(modifiers, primaryStats);
+  
+  public static CurrentVitals ToCurrentVitals(this VitalStats vitalStats) =>
+    new(
+      vitalStats.Health.GetCurrent(),
+      vitalStats.Stamina.GetCurrent(),
+      vitalStats.Shield.GetCurrent()
+    );
 }

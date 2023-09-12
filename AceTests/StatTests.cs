@@ -31,46 +31,46 @@ public static class SecondaryStatFactorTestCases
   {
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 0f, StatType.Strength),
-    }, 0f);
+       new(StatType.Speed, EnhancementLayer.Material, 0f, StatType.Strength),
+    }, 1f);
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
     }, 100f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} One stat one layer");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
     }, 200f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Two stats one layer");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Expertise, 1f, StatType.Agility),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Expertise, 1f, StatType.Agility),
     }, 200f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Two stats two layers");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, -1f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
-    }, 0f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Negative stat on different stat same layer");
+       new(StatType.Speed, EnhancementLayer.Material, -1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
+    }, 1f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Negative stat on different stat same layer");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
+       new(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Agility),
     }, 75f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} Negative stat on different stat other layer");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, -0.25f, StatType.Agility),
-    }, 0f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} two negative stats on different stats on two layers");
+       new(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, -0.25f, StatType.Agility),
+    }, 1f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} two negative stats on different stats on two layers");
     yield return new TestCaseData(new SecondaryStatFactor[]
     {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, -0.25f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, -0.25f, StatType.Strength),
     },75f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} positive and negative on same stat on same layer");
     yield return new TestCaseData(new SecondaryStatFactor[]
    {
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
-       new SecondaryStatFactor(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Material, 1f, StatType.Strength),
+       new(StatType.Speed, EnhancementLayer.Expertise, -0.25f, StatType.Strength),
    }, 75f).SetName($"{nameof(StatTests.GivenSecondaryStatModifiers_WhenGetCurrent_ThenAddAndMultiply)} positive and negative on same stat on differnt layers");
   }
 }

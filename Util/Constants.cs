@@ -24,4 +24,5 @@ public static class Constants
   public const string BattlerIconPath = "res://Scenes/Battle/TurnBar/BattlerIcon.tscn";
   public const string ActionListPath = "res://Scenes/UserInterface/UIBattlerActionSelectionMenu/action_list.tscn";
   public const string ActionButtonPath = "res://Scenes/UserInterface/UIBattlerActionSelectionMenu/action_button.tscn";
+  public const string BattlerHUDPath = "res://Scenes/UserInterface/UIBattlerHUD/BattlerHUD.tscn";
 }

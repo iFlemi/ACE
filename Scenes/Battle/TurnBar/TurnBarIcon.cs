@@ -14,7 +14,7 @@ public partial class TurnBarIcon : TextureRect
 
     public override void _Ready()
     {
-        BattlerIcon = Utils.GetFirstChildOfType<TextureRect>(this);
+        BattlerIcon = this.GetFirstChildOfType<TextureRect>();
     }
 
     public TurnBarIcon Snap(float ratio, bool isEnemy = false)
@@ -27,7 +27,7 @@ public partial class TurnBarIcon : TextureRect
     public TurnBarIcon SetBattlerIcon(Texture2D battlerIconTexture)
     {
         //GD.Print($"SetBattlerIcon: {GD.VarToStr(_battlerIcon)}");
-        BattlerIcon ??= Utils.GetFirstChildOfType<TextureRect>(this);
+        BattlerIcon ??= this.GetFirstChildOfType<TextureRect>();
         BattlerIcon.Texture = battlerIconTexture;
         return this;
     }

@@ -16,7 +16,7 @@ public partial class TurnBar : Control
     public override void _Ready()
     {
 
-        _turnBarBackground = Utils.GetFirstChildOfType<TextureRect>(this);
+        _turnBarBackground = this.GetFirstChildOfType<TextureRect>();
         _battlerIconResource = ResourceLoader.Load<PackedScene>(BattlerIconPath);
     }
 
@@ -28,7 +28,7 @@ public partial class TurnBar : Control
     public TurnBar Setup(Seq<Battler> battlers)
     {
         _battlers = battlers.Map(AddIconToBattler);
-        _battlers.ToList().ForEach(battler =>
+        _battlers.Iter(battler =>
         {
             battler.Connect(Battler.SignalName.ReadyForInput, new Callable(this, nameof(HandlePlayerInput)));
             _turnBarBackground.AddChild(battler.TurnBarIcon);
@@ -54,7 +54,7 @@ public partial class TurnBar : Control
     
     public Battler HandlePlayerInput(Battler battler)
     {
-        GD.Print($"HandlePlayerInput has been reached for {battler?.Id.ToString() ?? "null"}");
+        this.Log($"HandlePlayerInput has been reached for {battler?.Id.ToString() ?? "null"}");
         return battler;
     }
     

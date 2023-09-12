@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2imdagun13fx"]
+
+[ext_resource type="Script" path="res://Scenes/UserInterface/UIBattlerHUD/BattlerHUDList.cs" id="1_rolrm"]
+
+[node name="BattlerHUDList" type="HBoxContainer"]
+offset_left = 10.0
+offset_top = 823.0
+offset_right = 1909.0
+offset_bottom = 1063.0
+script = ExtResource("1_rolrm")

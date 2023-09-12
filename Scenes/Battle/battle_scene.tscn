@@ -1,19 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://duqv2uthkadpq"]
+[gd_scene load_steps=16 format=3 uid="uid://duqv2uthkadpq"]
 
 [ext_resource type="PackedScene" uid="uid://bfj32i8kmlwk7" path="res://Scenes/Battle/TurnBar/turn_bar.tscn" id="1_3pefr"]
 [ext_resource type="Texture2D" uid="uid://b5xk1v62yp5yt" path="res://Assets/Backgrounds/background.jpg" id="1_o6sr6"]
 [ext_resource type="Script" path="res://Scenes/Battle/BattleScene.cs" id="1_pevlf"]
 [ext_resource type="Script" path="res://Scenes/Battle/BattlerController.cs" id="4_y5wpr"]
 [ext_resource type="Texture2D" uid="uid://b22u7j5smx5m2" path="res://Assets/Characters/Players/penguin.png" id="5_ya4t8"]
+[ext_resource type="Script" path="res://Models/Character/PartyMember.cs" id="6_85mwn"]
 [ext_resource type="Texture2D" uid="uid://bk2l6k3q4a1cc" path="res://Assets/Characters/Enemies/snake.png" id="6_dll07"]
-[ext_resource type="Script" path="res://Models/PartyMember.cs" id="6_q2wgr"]
 [ext_resource type="Texture2D" uid="uid://cx5iierxfk542" path="res://Scenes/Battle/TurnBar/portrait_bg_player.png" id="7_fwmuc"]
-[ext_resource type="Script" path="res://Models/Enemy.cs" id="8_hdlw3"]
+[ext_resource type="Script" path="res://Models/Character/Enemy.cs" id="9_cxm4s"]
 [ext_resource type="Texture2D" uid="uid://bvqhkwsycsfa1" path="res://Scenes/Battle/TurnBar/portrait_bg_enemy.png" id="10_nw1lg"]
 [ext_resource type="Texture2D" uid="uid://tu8gollpvai7" path="res://Assets/Characters/Players/owl.png" id="11_pdjuk"]
 [ext_resource type="Texture2D" uid="uid://c5sri374cajn1" path="res://Assets/Characters/Enemies/crocodile.png" id="12_dtbwr"]
 [ext_resource type="Texture2D" uid="uid://bl8p50oc4htvq" path="res://Assets/Characters/Players/parrot.png" id="13_pq7s6"]
 [ext_resource type="Texture2D" uid="uid://cn2sgil6d8yb7" path="res://Assets/Characters/Players/chicken.png" id="14_6p1tk"]
+[ext_resource type="PackedScene" uid="uid://d2imdagun13fx" path="res://Scenes/UserInterface/UIBattlerHUD/BattlerHUDList.tscn" id="15_kcsor"]
 
 [node name="BattleScene" type="Control"]
 layout_mode = 3
@@ -46,46 +47,53 @@ offset_bottom = 128.0
 [node name="BattlerController" type="Node2D" parent="."]
 script = ExtResource("4_y5wpr")
 
-[node name="Player1" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1306, 556.565)
+[node name="Penguin" type="Sprite2D" parent="BattlerController"]
+position = Vector2(1379, 483.359)
 texture = ExtResource("5_ya4t8")
-script = ExtResource("6_q2wgr")
+script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("5_ya4t8")
 BattleIconBorder = ExtResource("7_fwmuc")
 
-[node name="Enemy1" type="Sprite2D" parent="BattlerController"]
-position = Vector2(508, 602.695)
+[node name="Snake" type="Sprite2D" parent="BattlerController"]
+position = Vector2(504, 503.416)
 texture = ExtResource("6_dll07")
-script = ExtResource("8_hdlw3")
+script = ExtResource("9_cxm4s")
 BattleIcon = ExtResource("6_dll07")
 BattleIconBorder = ExtResource("10_nw1lg")
 
-[node name="Player2" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1347, 755.123)
+[node name="Owl" type="Sprite2D" parent="BattlerController"]
+position = Vector2(1380, 654.841)
 texture = ExtResource("11_pdjuk")
-script = ExtResource("6_q2wgr")
+script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("11_pdjuk")
 BattleIconBorder = ExtResource("7_fwmuc")
 
-[node name="Enemy2" type="Sprite2D" parent="BattlerController"]
-position = Vector2(421, 768.16)
+[node name="Croc" type="Sprite2D" parent="BattlerController"]
+position = Vector2(458, 682.92)
 texture = ExtResource("12_dtbwr")
-script = ExtResource("8_hdlw3")
+script = ExtResource("9_cxm4s")
 BattleIcon = ExtResource("12_dtbwr")
 BattleIconBorder = ExtResource("10_nw1lg")
 
-[node name="Player3" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1557, 744.092)
+[node name="Parrot" type="Sprite2D" parent="BattlerController"]
+position = Vector2(1596, 653.839)
 texture = ExtResource("13_pq7s6")
-script = ExtResource("6_q2wgr")
+script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("13_pq7s6")
 BattleIconBorder = ExtResource("7_fwmuc")
 
-[node name="Player4" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1521, 563.585)
+[node name="Chicken" type="Sprite2D" parent="BattlerController"]
+position = Vector2(1587, 488.373)
 texture = ExtResource("14_6p1tk")
-script = ExtResource("6_q2wgr")
+script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("14_6p1tk")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="BattlerHUDList" parent="." instance=ExtResource("15_kcsor")]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 829.332
+offset_right = 1910.0
+offset_bottom = 1069.33

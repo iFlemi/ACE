@@ -7,14 +7,14 @@ namespace Ace.Util;
 
 public static class Utils
 {
-    public static T GetFirstChildOfType<T>(Node node) =>
+    public static T GetFirstChildOfType<T>(this Node node) =>
         node is T matchingNode
             ? matchingNode
             : node.GetChildren()
                 .Select(GetFirstChildOfType<T>)
                 .FirstOrDefault(result => result != null);
 
-    public static Seq<T> GetAllChildrenOfType<T>(Node node) where T : Node =>
+    public static Seq<T> GetAllChildrenOfType<T>(this Node node) where T : Node =>
         GetAllChildrenOfType(node, Seq<T>());
 
     private static Seq<T> GetAllChildrenOfType<T>(Node node, Seq<T> soFar) where T : Node =>

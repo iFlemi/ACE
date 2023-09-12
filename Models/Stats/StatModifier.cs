@@ -17,6 +17,9 @@ public record SecondaryStatFactor(StatType TargetStat, EnhancementLayer Layer, f
   public SourceStatLayer SourceStatLayer => new (Layer, SourceStat);
 }
 
+public record VitalStatFactor (StatType TargetStat, EnhancementLayer Layer, float Factor, StatType SourceStat)
+    : SecondaryStatFactor(TargetStat, Layer, Factor, SourceStat);
+
 public record SourceStatLayer(EnhancementLayer Layer, StatType SourceStat) : IComparable<SourceStatLayer>
 {
   public int CompareTo(SourceStatLayer other) =>

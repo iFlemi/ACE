@@ -1,4 +1,5 @@
-﻿using Ace.Interfaces;
+﻿using System.Linq;
+using Ace.Interfaces;
 using Ace.Models.Abilities;
 using Ace.Models.Abilities.Passive;
 using Ace.Models.Stats;
@@ -36,9 +37,13 @@ public abstract partial class Battler : Sprite2D
     Id = GetInstanceId();
   }
 
+  public CurrentVitals CurrentVitals => Stats.VitalStats.ToCurrentVitals();
+   
+    
+  
   public virtual float GetHealthFactor()
   {
-    var healthPercentage = Stats.SecondaryStats.Health.GetCurrent() / Stats.SecondaryStats.Health.BaseValue;
+    var healthPercentage = Stats.VitalStats.Health.GetCurrent() / Stats.VitalStats.Health.BaseValue;
 
     const float factorAt0 = 0.1f;
     const float factorAt50 = 0.67f;
@@ -107,17 +112,17 @@ public abstract partial class Battler : Sprite2D
 
   public Battler TakeDamage(int damageAmount, Battler damageSource)
   {
-    var currentShield = Mathf.RoundToInt(Stats.SecondaryStats.Shield.GetCurrent());
-    var currentStamina = Mathf.RoundToInt(Stats.SecondaryStats.Stamina.GetCurrent());
-    var currentHealth = Mathf.RoundToInt(Stats.SecondaryStats.Health.GetCurrent());
+    var currentShield = Mathf.RoundToInt(Stats.VitalStats.Shield.GetCurrent());
+    var currentStamina = Mathf.RoundToInt(Stats.VitalStats.Stamina.GetCurrent());
+    var currentHealth = Mathf.RoundToInt(Stats.VitalStats.Health.GetCurrent());
 
     var (shield, stamina, health) = DamageAllocator.AllocateDamage(damageAmount, currentShield, currentStamina, currentHealth, Stats.SecondaryStats.DamageResistance.GetCurrent());
 
-    Stats.SecondaryStats.Shield.SetCurrent(shield);
-    Stats.SecondaryStats.Stamina.SetCurrent(stamina);
-    Stats.SecondaryStats.Health.SetCurrent(health);
+    Stats.VitalStats.Shield.SetCurrent(shield);
+    Stats.VitalStats.Stamina.SetCurrent(stamina);
+    Stats.VitalStats.Health.SetCurrent(health);
 
-    var signalName = Stats.SecondaryStats.Health.GetCurrent() > 0
+    var signalName = Stats.VitalStats.Health.GetCurrent() > 0
         ? SignalName.DamageTaken
         : SignalName.CharacterDied;
     EmitSignal(signalName, this, damageSource);

@@ -11,6 +11,11 @@ public abstract record Ability (string Name)
   public override int GetHashCode() => Id.GetHashCode();
 }
 
+public class AbilityWrapper
+{
+  public ActiveAbility ActiveAbility { get; set; }
+}
+
 public abstract record BattleAbility (string Name) : Ability (Name)
 {
   public abstract Battler Action(Battler user, params Battler[] targets);
@@ -21,6 +26,8 @@ public abstract record ActiveAbility (string Name) : BattleAbility(Name)
   [Export]
   public Texture2D MenuIcon { get; set; }
 }
+ 
+
 
 public abstract record TriggeredAbility (string Name) : BattleAbility(Name)
 {

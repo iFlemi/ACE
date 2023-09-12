@@ -12,7 +12,7 @@ public partial class BattlerController : Node2D
 	public override void _Ready()
 	{
 		Id = GetInstanceId();
-		Battlers = Utils.GetAllChildrenOfType<Battler>(this).ToSeq();
+		Battlers = this.GetAllChildrenOfType<Battler>().ToSeq();
 	}
 
 	public override void _Process(double delta)
