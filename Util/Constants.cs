@@ -5,7 +5,7 @@ public static class Constants
   public const float ApBarActionPoint = 0.50f;
   public const double InputWaitTimescale = 0.25;
   public const float DefaultStatValue = 12f;
-
+  public const int BarMaxValue = 100;
 
   public const float Intensifier1 = 0.06f;
   public const float Intensifier2 = 0.12f;

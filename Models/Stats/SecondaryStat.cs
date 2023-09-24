@@ -17,10 +17,11 @@ public abstract record SecondaryStat : Stat
       total => Mathf.Max(total, 1f))
     };
 
-  protected Seq<SecondaryStatFactor> GetModifiersAffectingThisStat(Seq<SecondaryStatFactor> modifiers) =>
+  protected Seq<T> GetModifiersAffectingThisStat<T>(Seq<T> modifiers) where T : StatModifier =>
     modifiers.Filter(m => m.TargetStat == StatType);
 
-  protected static Seq<(SourceStatLayer, float)> GroupFactorsByStatAndLayer(Seq<SecondaryStatFactor> modifiers) =>
+
+  protected static Seq<(SourceStatLayer, float)> GroupFactorsByStatAndLayer<T>(Seq<T> modifiers) where T : SecondaryStatFactor =>
     modifiers.GroupBy(mod => mod.SourceStatLayer)
       .Map(g => (g.Key, g.Map(x => x.Factor).Sum()))
       .ToSeq();
@@ -42,19 +43,6 @@ public abstract record SecondaryStat : Stat
     statValues.GroupBy(x => x.Item1)
       .Map(grouping => grouping.Map(item => item.Item2).Sum())
       .Sum();
-  
-  protected static Seq<(StatType, float)> MergeFactorsWithBaseStats(Seq<(SourceStatLayer, float)> grouped, PrimaryStats stats) =>
-    grouped
-      .Map(grouping => grouping.Item1.SourceStat switch
-      {
-        StatType.Strength => (StatType.Strength, stats.Strength.BaseValue * grouping.Item2),
-        StatType.Agility => (StatType.Agility, stats.Agility.BaseValue * grouping.Item2),
-        StatType.Intelligence => (StatType.Intelligence, stats.Intelligence.BaseValue * grouping.Item2),
-        StatType.Power => (StatType.Power, stats.Power.BaseValue * grouping.Item2),
-        StatType.Willpower => (StatType.Willpower, stats.Willpower.BaseValue * grouping.Item2),
-        StatType.Endurance => (StatType.Endurance, stats.Endurance.BaseValue * grouping.Item2),
-        _ => (StatType.Unknown, grouping.Item2)
-      }).ToSeq();
 }
 
 public record Speed : SecondaryStat { public override StatType StatType => StatType.Speed; }
@@ -68,16 +56,18 @@ public record DamageResistance : SecondaryStat { public override StatType StatTy
 public abstract record VitalStat : SecondaryStat
 {
   public new float GetCurrent() => Current;
-  public new VitalStat DeriveFromPrimaryStats(Seq<SecondaryStatFactor> modifiers, PrimaryStats stats) =>
+  public int BarFillPercentage => Mathf.RoundToInt(Current / BaseValue * 100);
+  
+  public VitalStat DeriveFromPrimaryStats(Seq<VitalStatFactor> modifiers, PrimaryStats stats) =>
     this with
     {
       BaseValue = pipe(
         modifiers,
         GetModifiersAffectingThisStat,
         GroupFactorsByStatAndLayer,
-        grouped => MergeFactorsWithBaseStats(grouped, stats),
+        grouped => MergeFactorsWithCurrentStats(grouped, stats),
         SumMergedFactorsByStat,
-        total => Mathf.Max(total, 1f))
+        total => Mathf.Max(total, 0f))
     };
 }
 

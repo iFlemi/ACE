@@ -1,10 +1,6 @@
-using System;
-using Ace.Models;
-using Ace.Models.Abilities;
+using Ace.Util;
 using Godot;
-using LanguageExt.Pipes;
-using Microsoft.VisualBasic.CompilerServices;
-using Utils = Ace.Util.Utils;
+using Battler = Ace.Models.Character.Battler;
 
 namespace Ace.Scenes.UserInterface.UIBattlerActionSelectionMenu;
 
@@ -20,7 +16,7 @@ public partial class ActionList : VBoxContainer
   public override void _Ready()
   {
     _actionButton = ResourceLoader.Load<PackedScene>(ActionButtonPath);
-    _arrow = Utils.GetFirstChildOfType<MenuSelectArrow>(this);
+    _arrow = this.GetFirstChildOfType<MenuSelectArrow>();
   }
   
   public ActionList Setup(Battler battler)

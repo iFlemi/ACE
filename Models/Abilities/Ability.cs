@@ -18,7 +18,7 @@ public class AbilityWrapper
 
 public abstract record BattleAbility (string Name) : Ability (Name)
 {
-  public abstract Battler Action(Battler user, params Battler[] targets);
+  public abstract Character.Battler Action(Character.Battler user, params Character.Battler[] targets);
 }
 
 public abstract record ActiveAbility (string Name) : BattleAbility(Name)

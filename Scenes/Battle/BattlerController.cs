@@ -1,6 +1,6 @@
-using Ace.Models;
 using Ace.Util;
 using Godot;
+using Battler = Ace.Models.Character.Battler;
 
 namespace Ace.Scenes.Battle;
 

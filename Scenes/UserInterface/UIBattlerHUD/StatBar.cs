@@ -1,4 +1,3 @@
-using System;
 using Ace.Util;
 using Godot;
 
@@ -9,21 +8,30 @@ public partial class StatBar : TextureProgressBar
     protected Tween Tween;
     protected float FillRate = 0.2f;
     protected AnimationPlayer AnimationPlayer;
+   
+    public override void _Ready()
+    {
+    }
     
     public StatBar Setup(float currentValue, float maxValue)
     {
-        Value = currentValue;
-        MaxValue = maxValue;
+        Value = Mathf.RoundToInt(currentValue/maxValue * 100);
+        MaxValue = 100;
         AnimationPlayer = this.GetFirstChildOfType<AnimationPlayer>();
-        Tween.Connect(Tween.SignalName.Finished, new Callable(this, nameof(OnTweenCompleted))); 
         return this;
     }
    
     public StatBar SetTargetValue(float newValue)
     {
         var targetValue = Mathf.Max(newValue, 0);
-        Tween.TweenProperty(this, "value", Value, FillRate);
-        Tween.TweenProperty(this, "value", targetValue, FillRate);
+
+        if (IsInsideTree())
+        {
+            Tween = CreateTween();
+            Tween.Connect(Tween.SignalName.Finished, new Callable(this, nameof(OnTweenCompleted)));
+            Tween.TweenProperty(this, "value", Value, FillRate);
+            Tween.TweenProperty(this, "value", targetValue, FillRate);
+        }
         Value = targetValue;
         return this;
     }

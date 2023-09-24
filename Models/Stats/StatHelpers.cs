@@ -1,4 +1,6 @@
-﻿namespace Ace.Models.Stats;
+﻿using Ace.Util;
+
+namespace Ace.Models.Stats;
 public static class StatHelpers
 {
   public static float GetModified(Stat stat, Seq<StatModifier> modifiers) =>
@@ -25,12 +27,19 @@ public static class StatHelpers
   public static AllStats RecalculateAllStats(this AllStats currentStats, Seq<StatModifier> modifiers)
   {
     var newPrimary = currentStats.PrimaryStats.RecalculatePrimaryStats(modifiers
-      .Filter(m => m is not SecondaryStatFactor));
+      .Filter(m => m is not SecondaryStatFactor and not VitalStatFactor));
+    
     var newSecondary = currentStats.SecondaryStats
       .DeriveAllSecondaryStats(modifiers
         .Filter(m => m is SecondaryStatFactor)
         .Cast<SecondaryStatFactor>(), newPrimary);
-    return new AllStats { PrimaryStats = newPrimary, SecondaryStats = newSecondary };
+    
+    var newVital = currentStats.VitalStats
+      .DeriveAllVitalStats(modifiers
+        .Filter(m => m is VitalStatFactor)
+        .Cast<VitalStatFactor>(), newPrimary);
+    
+    return new AllStats { PrimaryStats = newPrimary, SecondaryStats = newSecondary, VitalStats = newVital };
   }
 
   public static PrimaryStats RecalculatePrimaryStats(this PrimaryStats stats, Seq<StatModifier> modifiers) =>
@@ -55,6 +64,14 @@ public static class StatHelpers
       DamageResistance = stats.DamageResistance.Recalculate(modifiers)
     };
   
+  public static VitalStats DeriveAllVitalStats(this VitalStats stats, Seq<VitalStatFactor> modifiers, PrimaryStats primaryStats) =>
+    stats with
+    {
+      Health = stats.Health.Rederive(modifiers, primaryStats),
+      Stamina = stats.Stamina.Rederive(modifiers, primaryStats),
+      Shield = stats.Shield.Rederive(modifiers, primaryStats)
+    };
+  
   public static T Recalculate<T>(this T stat, Seq<StatModifier> statModifiers) where T: Stat =>
     (T)stat.UpdateAndFetchCurrent(statModifiers);
 
@@ -70,6 +87,9 @@ public static class StatHelpers
     };
   
   public static T Rederive<T>(this T stat, Seq<SecondaryStatFactor> modifiers, PrimaryStats primaryStats) where T : SecondaryStat =>
+    (T)stat.DeriveFromPrimaryStats(modifiers, primaryStats);
+  
+  public static T Rederive<T>(this T stat, Seq<VitalStatFactor> modifiers, PrimaryStats primaryStats) where T : VitalStat  =>
     (T)stat.DeriveFromPrimaryStats(modifiers, primaryStats);
   
   public static CurrentVitals ToCurrentVitals(this VitalStats vitalStats) =>

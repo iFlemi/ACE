@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using Ace.Interfaces;
+﻿using Ace.Interfaces;
 using Ace.Models.Abilities;
 using Ace.Models.Abilities.Passive;
 using Ace.Models.Stats;
 using Ace.Util;
 using Godot;
 
-namespace Ace.Models;
+namespace Ace.Models.Character;
 
 public abstract partial class Battler : Sprite2D
 {
@@ -100,10 +99,10 @@ public abstract partial class Battler : Sprite2D
     return adjustedAp switch
     {
       <= 0 => (ApState.Waiting, 0),
-      var ap and < ApBarActionPoint => (ApState.Waiting, ap),
-      >= ApBarActionPoint when oldAp < ApBarActionPoint => (ApState.ReadyForInput, ApBarActionPoint),
-      >= ApBarActionPoint when CurrentApState is ApState.ReadyForInput or ApState.WaitingForInput => (ApState.WaitingForInput, ApBarActionPoint),
-      var ap and >= ApBarActionPoint when oldAp < 1.00f => (ApState.Activating, ap),
+      var ap and < Constants.ApBarActionPoint => (ApState.Waiting, ap),
+      >= Constants.ApBarActionPoint when oldAp < Constants.ApBarActionPoint => (ApState.ReadyForInput, Constants.ApBarActionPoint),
+      >= Constants.ApBarActionPoint when CurrentApState is ApState.ReadyForInput or ApState.WaitingForInput => (ApState.WaitingForInput, Constants.ApBarActionPoint),
+      var ap and >= Constants.ApBarActionPoint when oldAp < 1.00f => (ApState.Activating, ap),
       >= 1.00f when oldAp < 1.00f => (ApState.ReadyToActivate, 1.00f),
       >= 1.00f => (ApState.ReadyToActivate, 1.00f),
       _ => (ApState.Unknown, CurrentAp)
@@ -133,22 +132,8 @@ public abstract partial class Battler : Sprite2D
   protected AllStats RecalculateAllStats() =>
     Stats = Stats.RecalculateAllStats(PassiveAbilityStatModifiers);
 
-  protected PrimaryStats RecalculatePrimaryStats() =>
-    Stats.PrimaryStats = Stats.PrimaryStats.RecalculatePrimaryStats(PassiveAbilityStatModifiers);
-  protected SecondaryStats RecalculateSecondaryStats() =>
-    Stats.SecondaryStats = Stats.SecondaryStats.RecalculateSecondaryStats(PassiveAbilityStatModifiers);
-
-  protected SecondaryStats ReDeriveSecondaryStats() =>
-    Stats.SecondaryStats = Stats.SecondaryStats
-      .DeriveAllSecondaryStats(SecondaryStatFactors, Stats.PrimaryStats);
-
   protected Seq<StatModifier> PassiveAbilityStatModifiers =>
     PassiveAbilities.Bind(pa => pa.GetStatModifiers());
-
-  protected Seq<SecondaryStatFactor> SecondaryStatFactors =>
-    PassiveAbilityStatModifiers
-    .Filter(x => x is SecondaryStatFactor)
-    .Cast<SecondaryStatFactor>();
 
   public override int GetHashCode() => Id.GetHashCode();
 

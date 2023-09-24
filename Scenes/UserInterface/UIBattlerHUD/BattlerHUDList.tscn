@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Scenes/UserInterface/UIBattlerHUD/BattlerHUDList.cs" id="1_rolrm"]
 
-[node name="BattlerHUDList" type="HBoxContainer"]
-offset_left = 10.0
-offset_top = 823.0
+[node name="BattlerHUDList" type="VBoxContainer"]
+offset_left = 1544.0
+offset_top = 116.0
 offset_right = 1909.0
-offset_bottom = 1063.0
+offset_bottom = 839.0
 script = ExtResource("1_rolrm")

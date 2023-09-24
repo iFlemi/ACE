@@ -1,6 +1,7 @@
 using Ace.Models;
 using Ace.Util;
 using Godot;
+using Battler = Ace.Models.Character.Battler;
 
 namespace Ace.Scenes.Battle.TurnBar;
 
@@ -54,7 +55,7 @@ public partial class TurnBar : Control
     
     public Battler HandlePlayerInput(Battler battler)
     {
-        this.Log($"HandlePlayerInput has been reached for {battler?.Id.ToString() ?? "null"}");
+        //this.Log($"HandlePlayerInput has been reached for {battler?.Id.ToString() ?? "null"}");
         return battler;
     }
     

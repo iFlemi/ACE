@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://Scenes/UserInterface/UIBattlerHUD/StaminaBar.cs" id="7_nsx5o"]
 [ext_resource type="Script" path="res://Scenes/UserInterface/UIBattlerHUD/ShieldBar.cs" id="9_fvrld"]
 
+[sub_resource type="Animation" id="Animation_eew74"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_g7v8a"]
 resource_name = "damage"
 length = 0.2
@@ -25,9 +28,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
-
-[sub_resource type="Animation" id="Animation_eew74"]
-length = 0.001
 
 [sub_resource type="Animation" id="Animation_02ay5"]
 resource_name = "danger"
@@ -92,17 +92,18 @@ libraries = {
 "": SubResource("AnimationLibrary_gp6sl")
 }
 
-[node name="HealthLabel" type="Label" parent="Control"]
+[node name="HealthLabel" type="Label" parent="Control/HealthBar"]
 layout_mode = 0
-offset_left = 63.0
-offset_top = 46.0
-offset_right = 195.0
-offset_bottom = 66.0
+offset_left = 9.0
+offset_top = 2.0
+offset_right = 141.0
+offset_bottom = 22.0
 theme_override_font_sizes/font_size = 12
 text = "Health Label"
 horizontal_alignment = 1
 
 [node name="StaminaBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 76.0
 offset_right = 204.0
@@ -117,16 +118,18 @@ libraries = {
 "": SubResource("AnimationLibrary_gp6sl")
 }
 
-[node name="StaminaLabel" type="Label" parent="Control"]
-offset_left = 62.0
-offset_top = 78.0
-offset_right = 194.0
-offset_bottom = 98.0
+[node name="StaminaLabel" type="Label" parent="Control/StaminaBar"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 2.0
+offset_right = 140.0
+offset_bottom = 22.0
 theme_override_font_sizes/font_size = 12
 text = "Stamina Label"
 horizontal_alignment = 1
 
 [node name="ShieldBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
 offset_left = 55.0
 offset_top = 111.0
 offset_right = 205.0
@@ -141,11 +144,12 @@ libraries = {
 "": SubResource("AnimationLibrary_gp6sl")
 }
 
-[node name="ShieldLabel" type="Label" parent="Control"]
-offset_left = 61.0
-offset_top = 113.0
-offset_right = 197.0
-offset_bottom = 133.0
+[node name="ShieldLabel" type="Label" parent="Control/ShieldBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 142.0
+offset_bottom = 22.0
 theme_override_font_sizes/font_size = 12
 text = "Shield Label"
 horizontal_alignment = 1

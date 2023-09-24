@@ -3,7 +3,7 @@ using Ace.Util;
 
 namespace Ace.Models;
 
-public partial class PartyMember : Battler
+public partial class PartyMember : Character.Battler
 {
   public override bool InParty => true;
 

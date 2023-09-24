@@ -7,7 +7,7 @@ public partial class BattleScene : Control
 {
     private TurnBar.TurnBar _uiTurnBar;
     private BattlerController _battlerController;
-    private BattlerHUDList _battlerHUDList;
+    private UserInterface.UIBattlerHUD.BattlerHUDList _battlerHUDList;
 
     public override void _Ready()
     {
@@ -15,8 +15,8 @@ public partial class BattleScene : Control
         _battlerController = this.GetFirstChildOfType<BattlerController>();
         var battlers = _battlerController.GetBattlers();
         _uiTurnBar.Setup(battlers);
-        _battlerHUDList = this.GetFirstChildOfType<BattlerHUDList>();
-        _battlerHUDList.Setup(battlers.Filter(b => b.InParty));
+        _battlerHUDList = this.GetFirstChildOfType<UserInterface.UIBattlerHUD.BattlerHUDList>();
+        _battlerHUDList = _battlerHUDList.Setup(battlers.Filter(b => b.InParty));
     }
 
     public override void _Process(double delta)

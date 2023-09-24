@@ -4,7 +4,7 @@ public record Attack(string Name = "Attack") : ActiveAbility(Name)
 {
   public override string Description => "Attack an enemy with your equipped weapon.";
 
-  public override Battler Action(Battler user, params Battler[] targets)
+  public override Character.Battler Action(Character.Battler user, params Character.Battler[] targets)
     {
         return user;
     }

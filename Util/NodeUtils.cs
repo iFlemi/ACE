@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using Godot;
-using Newtonsoft.Json;
 
 namespace Ace.Util;
 
-public static class Utils
+public static class NodeUtils
 {
     public static T GetFirstChildOfType<T>(this Node node) =>
         node is T matchingNode
@@ -24,25 +22,4 @@ public static class Utils
             T => soFar,
             _ => node.GetChildren().Bind(childNode => GetAllChildrenOfType(childNode, soFar)).ToSeq()
         };
-
-    public static string FormatPercentage(this float value) =>
-        $"{value:P0}";
-
-    public static T Log<T>(this T obj, string message = "") 
-    {
-        GD.Print(message, obj);
-        return obj;
-    }
-
-    public static T Log<T>(this T obj, Func<T, string> f)
-    {
-        GD.Print(f(obj));
-        return obj;
-    }
-
-    public static T LogAsJson<T>(this T obj)
-    {
-        GD.Print(JsonConvert.SerializeObject(obj));
-        return obj;
-    }
 }

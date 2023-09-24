@@ -48,42 +48,42 @@ offset_bottom = 128.0
 script = ExtResource("4_y5wpr")
 
 [node name="Penguin" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1379, 483.359)
+position = Vector2(1210, 572.61)
 texture = ExtResource("5_ya4t8")
 script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("5_ya4t8")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Snake" type="Sprite2D" parent="BattlerController"]
-position = Vector2(504, 503.416)
+position = Vector2(480, 581.636)
 texture = ExtResource("6_dll07")
 script = ExtResource("9_cxm4s")
 BattleIcon = ExtResource("6_dll07")
 BattleIconBorder = ExtResource("10_nw1lg")
 
 [node name="Owl" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1380, 654.841)
+position = Vector2(1204, 744.092)
 texture = ExtResource("11_pdjuk")
 script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("11_pdjuk")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Croc" type="Sprite2D" parent="BattlerController"]
-position = Vector2(458, 682.92)
+position = Vector2(467, 770.166)
 texture = ExtResource("12_dtbwr")
 script = ExtResource("9_cxm4s")
 BattleIcon = ExtResource("12_dtbwr")
 BattleIconBorder = ExtResource("10_nw1lg")
 
 [node name="Parrot" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1596, 653.839)
+position = Vector2(1405, 760.138)
 texture = ExtResource("13_pq7s6")
 script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("13_pq7s6")
 BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="Chicken" type="Sprite2D" parent="BattlerController"]
-position = Vector2(1587, 488.373)
+position = Vector2(1415, 570.605)
 texture = ExtResource("14_6p1tk")
 script = ExtResource("6_85mwn")
 BattleIcon = ExtResource("14_6p1tk")
@@ -93,7 +93,7 @@ BattleIconBorder = ExtResource("7_fwmuc")
 
 [node name="BattlerHUDList" parent="." instance=ExtResource("15_kcsor")]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 829.332
-offset_right = 1910.0
-offset_bottom = 1069.33
+offset_left = 1606.0
+offset_top = 225.635
+offset_right = 1894.0
+offset_bottom = 977.635
