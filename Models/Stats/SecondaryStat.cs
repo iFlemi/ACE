@@ -55,6 +55,7 @@ public record DamageResistance : SecondaryStat { public override StatType StatTy
 
 public abstract record VitalStat : SecondaryStat
 {
+  public float InitialiseCurrent() => Current = BaseValue;
   public new float GetCurrent() => Current;
   public int BarFillPercentage => Mathf.RoundToInt(Current / BaseValue * 100);
   

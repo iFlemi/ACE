@@ -63,6 +63,13 @@ public record VitalStats : IEnumerable<VitalStat>
   public Stamina Stamina = new();
   public Shield Shield = new();
   
+  public VitalStats InitialiseCurrent()
+  {
+    Health.InitialiseCurrent();
+    Stamina.InitialiseCurrent();
+    Shield.InitialiseCurrent();
+    return this;
+  }
   public IEnumerator<VitalStat> GetEnumerator()
   {
     yield return Health;

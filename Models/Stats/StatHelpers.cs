@@ -33,11 +33,12 @@ public static class StatHelpers
       .DeriveAllSecondaryStats(modifiers
         .Filter(m => m is SecondaryStatFactor)
         .Cast<SecondaryStatFactor>(), newPrimary);
-    
+
     var newVital = currentStats.VitalStats
       .DeriveAllVitalStats(modifiers
         .Filter(m => m is VitalStatFactor)
-        .Cast<VitalStatFactor>(), newPrimary);
+        .Cast<VitalStatFactor>(), newPrimary)
+      .InitialiseCurrent();
     
     return new AllStats { PrimaryStats = newPrimary, SecondaryStats = newSecondary, VitalStats = newVital };
   }

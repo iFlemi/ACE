@@ -16,12 +16,12 @@ public record BasicStats(string Name = "Base Stats") : PassiveAbility(Name)
 
   private static Seq<StatModifier> PrimaryStatModifiers =>
     Seq<StatModifier>(
-      new AdditiveValue(StatType.Strength, EnhancementLayer.Material, Constants.DefaultStatValue)
-      , new AdditiveValue(StatType.Agility, EnhancementLayer.Material, GD.Randf() * 10)
-      , new AdditiveValue(StatType.Intelligence, EnhancementLayer.Material, Constants.DefaultStatValue)
-      , new AdditiveValue(StatType.Power, EnhancementLayer.Material, Constants.DefaultStatValue)
-      , new AdditiveValue(StatType.Willpower, EnhancementLayer.Material, Constants.DefaultStatValue)
-      , new AdditiveValue(StatType.Endurance, EnhancementLayer.Material, Constants.DefaultStatValue));
+      new AdditiveValue(StatType.Strength, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6)
+      , new AdditiveValue(StatType.Agility, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6)
+      , new AdditiveValue(StatType.Intelligence, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6)
+      , new AdditiveValue(StatType.Power, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6)
+      , new AdditiveValue(StatType.Willpower, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6)
+      , new AdditiveValue(StatType.Endurance, EnhancementLayer.Material, Constants.DefaultStatValue + GD.Randf() * 6));
 
   private static Seq<StatModifier> SecondaryStatModifiers =>
     Seq<StatModifier>(

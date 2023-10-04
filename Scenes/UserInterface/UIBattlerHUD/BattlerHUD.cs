@@ -54,10 +54,10 @@ public partial class BattlerHUD : TextureRect
       .Map(v => _bars
         .Filter(b => b.StatType == v.StatType)
         .HeadOrNone()
-        .Map(s => s.SetTargetValue(v)))
+      .Do(s => s.SetTargetValue(v)))
       .ToSeq()
       .Somes()
-      .Log();
+      .ForceEvaluation();
 }
 
 public record LabelledBar(StatBar Bar, Label Label, StatType StatType)
